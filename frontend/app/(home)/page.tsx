@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -6,10 +8,16 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Building2, ShieldCheck, UserCog } from "lucide-react";
+import { Building2, Loader2, ShieldCheck, UserCog } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Home = () => {
+  const router = useRouter();
+  const [orgLoading, setOrgLoading] = useState<boolean>(false);
+  const [servLoading, setServLoading] = useState<boolean>(false);
+
   return (
     <div className="flex flex-col justify-center items-center w-full lg:p-6">
       <header className="flex justify-between items-center w-full">
@@ -55,10 +63,21 @@ const Home = () => {
 
           <CardFooter className="flex justify-center items-center w-full">
             <Button
+              onClick={() => {
+                setOrgLoading(true);
+                setTimeout(() => {
+                  setOrgLoading(false);
+                }, 2000);
+                router.push("/organization/signin");
+              }}
               size={"lg"}
               className="bg-blue-700 hover:bg-blue-800 w-full lg:py-6"
             >
-              Log in as Organization
+              {orgLoading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                "Log in as Organization"
+              )}
             </Button>
           </CardFooter>
         </Card>
@@ -81,11 +100,22 @@ const Home = () => {
           </CardContent>
           <CardFooter className="flex justify-center items-center w-full">
             <Button
+              onClick={() => {
+                setServLoading(true);
+                setTimeout(() => {
+                  setServLoading(false);
+                }, 2000);
+                router.push("/service-provider/signin");
+              }}
               variant={"secondary"}
               size={"lg"}
               className="w-full lg:py-6 bg-blue-500/20 hover:bg-blue-500/30"
             >
-              Log in as Service Provider
+              {servLoading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                "Log in as Service Provider"
+              )}
             </Button>
           </CardFooter>
         </Card>

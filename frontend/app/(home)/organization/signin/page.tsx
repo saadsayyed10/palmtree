@@ -12,11 +12,14 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/toast";
 import { Building2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const OrganizationSignIn = () => {
   const [emailAddress, setEmailAddress] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const router = useRouter();
 
   const handleLogin = async () => {
     if (!emailAddress) {
@@ -65,6 +68,7 @@ const OrganizationSignIn = () => {
               onChange={(e) => setEmailAddress(e.target.value)}
               type="email"
               className="w-full lg:py-5 bg-muted-foreground/10"
+              placeholder="samikhed@palm.com"
             />
           </div>
           <div className="flex justify-start items-start w-full flex-col lg:gap-y-2">
@@ -80,11 +84,13 @@ const OrganizationSignIn = () => {
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               className="w-full lg:py-5 bg-muted-foreground/10"
+              placeholder="****************"
             />
           </div>
           <Button
             size={"lg"}
             className="bg-blue-700 hover:bg-blue-800 w-full lg:py-6 lg:mt-4"
+            onClick={handleLogin}
           >
             Log In
           </Button>
@@ -96,7 +102,12 @@ const OrganizationSignIn = () => {
           <p className="text-sm text-neutral-600">
             Don&apos;t have an organization account?
             <br />
-            <span className="font-medium text-blue-800 cursor-pointer">
+            <span
+              onClick={() =>
+                router.push("/organization/signup/founder/personal")
+              }
+              className="font-medium text-blue-800 cursor-pointer"
+            >
               Create an organization account
             </span>
           </p>

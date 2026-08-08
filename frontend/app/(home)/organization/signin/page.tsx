@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,11 +9,42 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui/toast";
 import { Building2 } from "lucide-react";
+import { useState } from "react";
 
 const OrganizationSignIn = () => {
+  const [emailAddress, setEmailAddress] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleLogin = async () => {
+    if (!emailAddress) {
+      toast.add({
+        type: "error",
+        description: "Email address was not provided",
+      });
+      return;
+    }
+    if (!emailAddress.includes("@")) {
+      toast.add({
+        type: "error",
+        description: "Email address is invalid",
+      });
+      return;
+    }
+
+    if (!password) {
+      toast.add({
+        type: "error",
+        description: "Password was not provided",
+      });
+      return;
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center w-full min-h-screen lg:px-132">
+    <div className="flex justify-center items-center w-full min-h-screen lg:px-136">
       <Card className="w-full shadow-md">
         <CardHeader className="flex justify-center items-center w-full flex-col lg:gap-y-2">
           <div className="w-16 h-16 bg-blue-700 rounded-[100%] flex justify-center items-center lg:mb-2">
@@ -27,11 +60,27 @@ const OrganizationSignIn = () => {
         <CardContent className="flex justify-start items-start w-full flex-col lg:gap-y-6 lg:mt-10">
           <div className="flex justify-start items-start w-full flex-col lg:gap-y-2">
             <Label>Email address</Label>
-            <Input className="w-full lg:py-5 bg-muted-foreground/10" />
+            <Input
+              value={emailAddress}
+              onChange={(e) => setEmailAddress(e.target.value)}
+              type="email"
+              className="w-full lg:py-5 bg-muted-foreground/10"
+            />
           </div>
           <div className="flex justify-start items-start w-full flex-col lg:gap-y-2">
-            <Label>Password</Label>
-            <Input className="w-full lg:py-5 bg-muted-foreground/10" />
+            <div className="flex justify-between items-center w-full">
+              <Label>Password</Label>
+              <Label className="text-blue-800 cursor-pointer">
+                {/* TODO: Implement dialog for reset password */}
+                Forgot Password?
+              </Label>
+            </div>
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              className="w-full lg:py-5 bg-muted-foreground/10"
+            />
           </div>
           <Button
             size={"lg"}
@@ -40,6 +89,9 @@ const OrganizationSignIn = () => {
             Log In
           </Button>
         </CardContent>
+        <div className="flex justify-center items-center w-full lg:px-8">
+          <Separator className="w-full" />
+        </div>
         <CardFooter className="flex justify-center items-center w-full text-center">
           <p className="text-sm text-neutral-600">
             Don&apos;t have an organization account?

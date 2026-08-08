@@ -15,10 +15,8 @@ import {
   Users,
 } from "lucide-react";
 
-const OrganizationSignUpFounderPersonal = () => {
+const OrganizationSignUpFounderContact = () => {
   const { name, setName, email, setEmail } = useFounderRegister();
-
-  let role = "FOUNDER";
 
   const handlePersonalDetails = () => {
     if (!name) {
@@ -61,31 +59,52 @@ const OrganizationSignUpFounderPersonal = () => {
         <div className="flex justify-start items-start w-full flex-col lg:gap-y-4">
           <div className="flex justify-start items-start w-full lg:gap-x-20">
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
-              <Label>Name</Label>
+              <Label>State</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="Sami Khedira"
+                placeholder="Maharashtra"
                 value={name!}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
-              <Label>Email</Label>
+              <Label>City</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="samikhed@palm.com"
+                placeholder="Pune"
                 value={email!}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
+
           <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2 mt-4">
-            <Label>Role</Label>
+            <Label>Local Address</Label>
             <Input
-              placeholder="Founder"
+              placeholder="Clover Hills, B-104, NIBM"
               className="w-full lg:py-5 bg-muted-foreground/10 cursor-not-allowed"
-              disabled
             />
+          </div>
+
+          <div className="flex justify-start items-start w-full lg:gap-x-20 lg:mt-8">
+            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+              <Label>Aadhar Number</Label>
+              <Input
+                className="w-full lg:py-5 bg-muted-foreground/10"
+                placeholder="1111 0001 1010"
+                value={name!}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+              <Label>PAN</Label>
+              <Input
+                className="w-full lg:py-5 bg-muted-foreground/10"
+                placeholder="ABCDE1234P"
+                value={email!}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="flex justify-start items-center w-full lg:gap-x-52">
@@ -106,20 +125,20 @@ const OrganizationSignUpFounderPersonal = () => {
         <div className="flex justify-end items-end w-full flex-col lg:gap-y-2">
           <div className="flex justify-between items-end w-full">
             <h6 className="font-medium text-neutral-600">
-              Step 1 of 4: Personal Details
+              Step 3 of 4: Security Details
             </h6>
-            <h6 className="font-medium text-blue-800">25%</h6>
+            <h6 className="font-medium text-blue-800">75%</h6>
           </div>
         </div>
 
         <div className="flex justify-start items-start h-2 w-full bg-neutral-600/30 rounded-full">
-          <div className="flex justify-start items-start h-2 w-[20%] bg-blue-800 rounded-full" />
+          <div className="flex justify-start items-start h-2 w-[80%] bg-blue-800 rounded-full" />
         </div>
 
         <div className="grid grid-cols-4 justify-start items-start w-full lg:gap-x-28">
-          <h6 className="font-medium text-blue-800">Personal</h6>
+          <h6 className="text-neutral-600">Personal</h6>
           <h6 className="text-neutral-600">Contact</h6>
-          <h6 className="text-neutral-600">Security</h6>
+          <h6 className="font-medium text-blue-800">Security</h6>
           <h6 className="text-neutral-600">Review</h6>
         </div>
 
@@ -171,4 +190,4 @@ const OrganizationSignUpFounderPersonal = () => {
   );
 };
 
-export default OrganizationSignUpFounderPersonal;
+export default OrganizationSignUpFounderContact;

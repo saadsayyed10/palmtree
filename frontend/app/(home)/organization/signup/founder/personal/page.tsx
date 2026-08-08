@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
+import { useFounderRegister } from "@/hooks/useFounderRegister";
 import {
   ArrowBigRight,
   ChartColumnStacked,
@@ -16,8 +17,7 @@ import {
 import React, { useState } from "react";
 
 const OrganizationSignUpFounderPersonal = () => {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  const { name, setName, email, setEmail } = useFounderRegister();
 
   let role = "FOUNDER";
 
@@ -66,7 +66,7 @@ const OrganizationSignUpFounderPersonal = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="Sami Khedira"
-                value={name}
+                value={name!}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -75,7 +75,7 @@ const OrganizationSignUpFounderPersonal = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="samikhed@palm.com"
-                value={email}
+                value={email!}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>

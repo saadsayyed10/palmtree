@@ -15,7 +15,7 @@ import {
   Users,
 } from "lucide-react";
 
-const OrganizationSignUpFounderContact = () => {
+const OrganizationSignUpFounderSecurity = () => {
   const { name, setName, email, setEmail } = useFounderRegister();
 
   const handlePersonalDetails = () => {
@@ -190,4 +190,4 @@ const OrganizationSignUpFounderContact = () => {
   );
 };
 
-export default OrganizationSignUpFounderContact;
+export default OrganizationSignUpFounderSecurity;

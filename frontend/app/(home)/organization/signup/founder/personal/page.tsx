@@ -10,15 +10,19 @@ import {
   ArrowBigRight,
   ChartColumnStacked,
   Info,
+  Loader2,
   PhoneCall,
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const OrganizationSignUpFounderPersonal = () => {
   const { name, setName, email, setEmail } = useFounderRegister();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  let role = "FOUNDER";
+  const router = useRouter();
 
   const handlePersonalDetails = () => {
     if (!name) {
@@ -44,6 +48,13 @@ const OrganizationSignUpFounderPersonal = () => {
       });
       return;
     }
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    router.push("/organization/signup/founder/contact");
   };
 
   return (
@@ -65,7 +76,7 @@ const OrganizationSignUpFounderPersonal = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="Sami Khedira"
-                value={name!}
+                value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -74,7 +85,7 @@ const OrganizationSignUpFounderPersonal = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="samikhed@palm.com"
-                value={email!}
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -96,8 +107,14 @@ const OrganizationSignUpFounderPersonal = () => {
               size={"lg"}
               className="bg-blue-700 hover:bg-blue-800"
               onClick={handlePersonalDetails}
+              disabled={loading}
             >
-              Continue <ArrowBigRight />
+              Continue{" "}
+              {loading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <ArrowBigRight />
+              )}
             </Button>
           </div>
         </div>

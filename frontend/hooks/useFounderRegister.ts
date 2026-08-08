@@ -1,16 +1,16 @@
 import { create } from "zustand";
 
 interface FounderRegisterStore {
-  name: string | null;
+  name: string;
   setName: (name: string) => void;
 
-  email: string | null;
+  email: string;
   setEmail: (email: string) => void;
 }
 
 export const useFounderRegister = create<FounderRegisterStore>((set) => ({
-  name: null,
-  email: null,
+  name: "",
+  email: "",
 
   setName: (name) => {
     set({ name });

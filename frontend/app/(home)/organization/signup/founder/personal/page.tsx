@@ -161,7 +161,9 @@ const OrganizationSignUpFounderPersonal = () => {
               <PhoneCall size={20} />
               <h6>Our support team is available 24/7 for verification help.</h6>
             </div>
-            <span className="text-blue-800 font-medium">Contact Support.</span>
+            <span className="text-blue-800 font-medium cursor-pointer">
+              Contact Support.
+            </span>
           </CardContent>
         </Card>
       </div>

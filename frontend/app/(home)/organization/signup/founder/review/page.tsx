@@ -1,5 +1,6 @@
 "use client";
 
+import { registerOrganizationFounderAPI } from "@/_api/organization-api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -32,11 +33,46 @@ const OrganizationSignUpFounderReview = () => {
   } = useFounderRegister();
 
   const role = "FOUNDER";
+  const address = `${state}, ${city}, ${localAddress}`;
 
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const handleRegisterFounder = () => {};
+  const handleRegisterFounder = async () => {
+    setLoading(true);
+    try {
+      await registerOrganizationFounderAPI(
+        name,
+        email,
+        role,
+        contact,
+        address,
+        aadharNumber,
+        panNumber,
+      )
+        .then((res) => {
+          toast.add({
+            type: "success",
+            description: res.data.message,
+          });
+
+          router.push("/organization/dashboard");
+        })
+        .catch((err) =>
+          toast.add({
+            type: "error",
+            description: err?.response?.data?.error,
+          }),
+        );
+    } catch (error: any) {
+      toast.add({
+        type: "error",
+        description: error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex justify-between items-center w-full lg:p-20">

@@ -6,11 +6,19 @@ interface FounderRegisterStore {
 
   email: string;
   setEmail: (email: string) => void;
+
+  password: string;
+  setPassword: (password: string) => void;
+
+  contact: string;
+  setContact: (contact: string) => void;
 }
 
 export const useFounderRegister = create<FounderRegisterStore>((set) => ({
   name: "",
   email: "",
+  password: "",
+  contact: "",
 
   setName: (name) => {
     set({ name });
@@ -18,5 +26,13 @@ export const useFounderRegister = create<FounderRegisterStore>((set) => ({
 
   setEmail: (email) => {
     set({ email });
+  },
+
+  setPassword: (password) => {
+    set({ password });
+  },
+
+  setContact: (contact) => {
+    set({ contact });
   },
 }));

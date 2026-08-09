@@ -10,38 +10,61 @@ import {
   ArrowBigRight,
   ChartColumnStacked,
   Info,
+  Loader2,
   PhoneCall,
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const OrganizationSignUpFounderContact = () => {
-  const { name, setName, email, setEmail } = useFounderRegister();
+  const { password, setPassword, contact, setContact } = useFounderRegister();
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const handlePersonalDetails = () => {
-    if (!name) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  const handleContactDetails = () => {
+    if (!contact) {
       toast.add({
         type: "error",
-        description: "Founder name was not provided",
+        description: "Founder contact number was not provided",
       });
       return;
     }
 
-    if (!email) {
+    if (contact.startsWith("+91")) {
       toast.add({
         type: "error",
-        description: "Founder email was not provided",
+        description:
+          "Please provide 10 digits number only and remove special signs (+, -, *, etc.)",
       });
       return;
     }
 
-    if (!email.includes("@")) {
+    if (!password || password.length < 8) {
       toast.add({
         type: "error",
-        description: "Founder email is not valid",
+        description: "Please provide a strong password with over 8 characters",
       });
       return;
     }
+
+    if (password != confirmPassword) {
+      toast.add({
+        type: "error",
+        description: "Password do not match",
+      });
+      return;
+    }
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    router.push("/organization/signup/founder/security");
   };
 
   return (
@@ -63,6 +86,8 @@ const OrganizationSignUpFounderContact = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="****************"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
@@ -70,6 +95,8 @@ const OrganizationSignUpFounderContact = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="****************"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
           </div>
@@ -78,7 +105,9 @@ const OrganizationSignUpFounderContact = () => {
             <Label>Contact Number</Label>
             <Input
               placeholder="+91-888888000"
-              className="w-full lg:py-5 bg-muted-foreground/10 cursor-not-allowed"
+              className="w-full lg:py-5 bg-muted-foreground/10"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
             />
           </div>
 
@@ -89,9 +118,15 @@ const OrganizationSignUpFounderContact = () => {
             <Button
               size={"lg"}
               className="bg-blue-700 hover:bg-blue-800"
-              onClick={handlePersonalDetails}
+              onClick={handleContactDetails}
+              disabled={loading}
             >
-              Continue <ArrowBigRight />
+              Continue{" "}
+              {loading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <ArrowBigRight />
+              )}
             </Button>
           </div>
         </div>

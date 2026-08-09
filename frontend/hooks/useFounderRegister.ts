@@ -12,6 +12,21 @@ interface FounderRegisterStore {
 
   contact: string;
   setContact: (contact: string) => void;
+
+  state: string;
+  setState: (state: string) => void;
+
+  city: string;
+  setCity: (city: string) => void;
+
+  localAddress: string;
+  setLocalAddress: (localAddress: string) => void;
+
+  aadharNumber: string;
+  setAadharNumber: (aadharNumber: string) => void;
+
+  panNumber: string;
+  setPanNumber: (panNumber: string) => void;
 }
 
 export const useFounderRegister = create<FounderRegisterStore>((set) => ({
@@ -19,6 +34,11 @@ export const useFounderRegister = create<FounderRegisterStore>((set) => ({
   email: "",
   password: "",
   contact: "",
+  state: "",
+  city: "",
+  localAddress: "",
+  aadharNumber: "",
+  panNumber: "",
 
   setName: (name) => {
     set({ name });
@@ -34,5 +54,25 @@ export const useFounderRegister = create<FounderRegisterStore>((set) => ({
 
   setContact: (contact) => {
     set({ contact });
+  },
+
+  setState: (state) => {
+    set({ state });
+  },
+
+  setCity: (city) => {
+    set({ city });
+  },
+
+  setLocalAddress: (localAddress) => {
+    set({ localAddress });
+  },
+
+  setAadharNumber: (aadharNumber) => {
+    set({ aadharNumber });
+  },
+
+  setPanNumber: (panNumber) => {
+    set({ panNumber });
   },
 }));

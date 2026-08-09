@@ -7,10 +7,10 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { useFounderRegister } from "@/hooks/useFounderRegister";
 import {
-  ArrowBigRight,
   ChartColumnStacked,
   Info,
   Loader2,
+  LogIn,
   PhoneCall,
   ShieldCheck,
   Users,
@@ -18,79 +18,25 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const OrganizationSignUpFounderSecurity = () => {
+const OrganizationSignUpFounderReview = () => {
   const {
+    name,
+    email,
+    password,
+    contact,
     state,
-    setState,
     city,
-    setCity,
     localAddress,
-    setLocalAddress,
     aadharNumber,
-    setAadharNumber,
     panNumber,
-    setPanNumber,
   } = useFounderRegister();
+
+  const role = "FOUNDER";
 
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const handleSecurityDetails = () => {
-    if (!state) {
-      toast.add({
-        type: "error",
-        description: "Please provide your state within India",
-      });
-      return;
-    }
-
-    if (!city) {
-      toast.add({
-        type: "error",
-        description: "Please provide your city within India",
-      });
-      return;
-    }
-
-    if (!city) {
-      toast.add({
-        type: "error",
-        description: "Please provide your living address",
-      });
-      return;
-    }
-
-    if (!aadharNumber) {
-      toast.add({
-        type: "error",
-        description: "Please provide your Aadhar Card number",
-      });
-      return;
-    }
-
-    if (aadharNumber.length != 12) {
-      toast.add({
-        type: "error",
-        description: "Provided Aadhar Number is invalid",
-      });
-      return;
-    }
-
-    if (!panNumber) {
-      toast.add({
-        type: "error",
-        description: "Please provide your PAN number",
-      });
-      return;
-    }
-
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-
-    router.push("/organization/signup/founder/review");
-  };
+  const handleRegisterFounder = () => {};
 
   return (
     <div className="flex justify-between items-center w-full lg:p-20">
@@ -107,21 +53,66 @@ const OrganizationSignUpFounderSecurity = () => {
         <div className="flex justify-start items-start w-full flex-col lg:gap-y-4">
           <div className="flex justify-start items-start w-full lg:gap-x-20">
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+              <Label>Name</Label>
+              <Input
+                className="w-full lg:py-5 bg-muted-foreground/10"
+                disabled
+                value={name}
+              />
+            </div>
+            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+              <Label>Email</Label>
+              <Input
+                className="w-full lg:py-5 bg-muted-foreground/10"
+                disabled
+                value={email}
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2 mt-4">
+            <Label>Role</Label>
+            <Input
+              className="w-full lg:py-5 bg-muted-foreground/10"
+              disabled
+              value={role}
+            />
+          </div>
+
+          <div className="flex justify-start items-start w-full lg:gap-x-20 lg:mt-8">
+            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+              <Label>Password</Label>
+              <Input
+                className="w-full lg:py-5 bg-muted-foreground/10"
+                disabled
+                value={password}
+              />
+            </div>
+            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+              <Label>Contact Number</Label>
+              <Input
+                className="w-full lg:py-5 bg-muted-foreground/10"
+                disabled
+                value={contact}
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-start items-start w-full lg:gap-x-20 lg:mt-8">
+            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>State</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="Maharashtra"
+                disabled
                 value={state}
-                onChange={(e) => setState(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>City</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="Pune"
+                disabled
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
               />
             </div>
           </div>
@@ -129,10 +120,9 @@ const OrganizationSignUpFounderSecurity = () => {
           <div className="flex justify-start items-start w-160 flex-col lg:gap-y-2 mt-4">
             <Label>Local Address</Label>
             <Input
-              placeholder="Clover Hills, B-104, NIBM - 411048"
               className="w-full lg:py-5 bg-muted-foreground/10"
+              disabled
               value={localAddress}
-              onChange={(e) => setLocalAddress(e.target.value)}
             />
           </div>
 
@@ -141,18 +131,16 @@ const OrganizationSignUpFounderSecurity = () => {
               <Label>Aadhar Number</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="1111 0001 1010"
+                disabled
                 value={aadharNumber}
-                onChange={(e) => setAadharNumber(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>PAN</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="ABCDE1234P"
+                disabled
                 value={panNumber}
-                onChange={(e) => setPanNumber(e.target.value)}
               />
             </div>
           </div>
@@ -164,14 +152,10 @@ const OrganizationSignUpFounderSecurity = () => {
             <Button
               size={"lg"}
               className="bg-blue-700 hover:bg-blue-800"
-              onClick={handleSecurityDetails}
+              onClick={handleRegisterFounder}
             >
-              Continue{" "}
-              {loading ? (
-                <Loader2 className="animate-spin" />
-              ) : (
-                <ArrowBigRight />
-              )}
+              Sign Up{" "}
+              {loading ? <Loader2 className="animate-spin" /> : <LogIn />}
             </Button>
           </div>
         </div>
@@ -180,21 +164,21 @@ const OrganizationSignUpFounderSecurity = () => {
         <div className="flex justify-end items-end w-full flex-col lg:gap-y-2">
           <div className="flex justify-between items-end w-full">
             <h6 className="font-medium text-neutral-600">
-              Step 3 of 4: Security Details
+              Step 4 of 4: Review Details
             </h6>
-            <h6 className="font-medium text-blue-800">75%</h6>
+            <h6 className="font-medium text-blue-800">99%</h6>
           </div>
         </div>
 
         <div className="flex justify-start items-start h-2 w-full bg-neutral-600/30 rounded-full">
-          <div className="flex justify-start items-start h-2 w-[80%] bg-blue-800 rounded-full" />
+          <div className="flex justify-start items-start h-2 w-[95%] bg-blue-800 rounded-full" />
         </div>
 
         <div className="grid grid-cols-4 justify-start items-start w-full lg:gap-x-28">
           <h6 className="text-neutral-600">Personal</h6>
           <h6 className="text-neutral-600">Contact</h6>
-          <h6 className="font-medium text-blue-800">Security</h6>
-          <h6 className="text-neutral-600">Review</h6>
+          <h6 className="text-neutral-600">Security</h6>
+          <h6 className="font-medium text-blue-800">Review</h6>
         </div>
 
         <Card className="w-full bg-blue-500/20 border border-blue-700/20">
@@ -245,4 +229,4 @@ const OrganizationSignUpFounderSecurity = () => {
   );
 };
 
-export default OrganizationSignUpFounderSecurity;
+export default OrganizationSignUpFounderReview;

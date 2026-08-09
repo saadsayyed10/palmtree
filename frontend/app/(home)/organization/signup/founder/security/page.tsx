@@ -10,38 +10,86 @@ import {
   ArrowBigRight,
   ChartColumnStacked,
   Info,
+  Loader2,
   PhoneCall,
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const OrganizationSignUpFounderSecurity = () => {
-  const { name, setName, email, setEmail } = useFounderRegister();
+  const {
+    state,
+    setState,
+    city,
+    setCity,
+    localAddress,
+    setLocalAddress,
+    aadharNumber,
+    setAadharNumber,
+    panNumber,
+    setPanNumber,
+  } = useFounderRegister();
 
-  const handlePersonalDetails = () => {
-    if (!name) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  const handleSecurityDetails = () => {
+    if (!state) {
       toast.add({
         type: "error",
-        description: "Founder name was not provided",
+        description: "Please provide your state within India",
       });
       return;
     }
 
-    if (!email) {
+    if (!city) {
       toast.add({
         type: "error",
-        description: "Founder email was not provided",
+        description: "Please provide your city within India",
       });
       return;
     }
 
-    if (!email.includes("@")) {
+    if (!city) {
       toast.add({
         type: "error",
-        description: "Founder email is not valid",
+        description: "Please provide your living address",
       });
       return;
     }
+
+    if (!aadharNumber) {
+      toast.add({
+        type: "error",
+        description: "Please provide your Aadhar Card number",
+      });
+      return;
+    }
+
+    if (aadharNumber.length != 12) {
+      toast.add({
+        type: "error",
+        description: "Provided Aadhar Number is invalid",
+      });
+      return;
+    }
+
+    if (!panNumber) {
+      toast.add({
+        type: "error",
+        description: "Please provide your PAN number",
+      });
+      return;
+    }
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    });
+
+    router.push("/organization/signup/founder/review");
   };
 
   return (
@@ -63,8 +111,8 @@ const OrganizationSignUpFounderSecurity = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="Maharashtra"
-                value={name!}
-                onChange={(e) => setName(e.target.value)}
+                value={state}
+                onChange={(e) => setState(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
@@ -72,8 +120,8 @@ const OrganizationSignUpFounderSecurity = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="Pune"
-                value={email!}
-                onChange={(e) => setEmail(e.target.value)}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             </div>
           </div>
@@ -82,7 +130,9 @@ const OrganizationSignUpFounderSecurity = () => {
             <Label>Local Address</Label>
             <Input
               placeholder="Clover Hills, B-104, NIBM"
-              className="w-full lg:py-5 bg-muted-foreground/10 cursor-not-allowed"
+              className="w-full lg:py-5 bg-muted-foreground/10"
+              value={localAddress}
+              onChange={(e) => setLocalAddress(e.target.value)}
             />
           </div>
 
@@ -92,8 +142,8 @@ const OrganizationSignUpFounderSecurity = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="1111 0001 1010"
-                value={name!}
-                onChange={(e) => setName(e.target.value)}
+                value={aadharNumber}
+                onChange={(e) => setAadharNumber(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
@@ -101,8 +151,8 @@ const OrganizationSignUpFounderSecurity = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="ABCDE1234P"
-                value={email!}
-                onChange={(e) => setEmail(e.target.value)}
+                value={panNumber}
+                onChange={(e) => setPanNumber(e.target.value)}
               />
             </div>
           </div>
@@ -114,9 +164,14 @@ const OrganizationSignUpFounderSecurity = () => {
             <Button
               size={"lg"}
               className="bg-blue-700 hover:bg-blue-800"
-              onClick={handlePersonalDetails}
+              onClick={handleSecurityDetails}
             >
-              Continue <ArrowBigRight />
+              Continue{" "}
+              {loading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <ArrowBigRight />
+              )}
             </Button>
           </div>
         </div>

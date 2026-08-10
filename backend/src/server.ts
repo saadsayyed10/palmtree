@@ -2,12 +2,14 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { env } from "./config/env.config";
 import { connectToDB } from "./config/db.config";
+import mainRouter from "./api/routes/index.route";
 
 const PORT = env.PORT;
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use("/api", mainRouter);
 
 app.get("/health", (_req: Request, res: Response) => {
   try {

@@ -4,7 +4,7 @@ import { apiUrl } from "./apiUrl";
 export const registerOrganizationFounderAPI = async (
   name: string,
   email: string,
-  role: string,
+  password: string,
   contact: string,
   address: string,
   aadharNumber: string,
@@ -13,8 +13,8 @@ export const registerOrganizationFounderAPI = async (
   return await axios.post(`${apiUrl}/organization/founder`, {
     name,
     email,
-    role,
     contact,
+    password,
     address,
     aadharNumber,
     panNumber,

@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { env } from "./config/env.config";
+import { connectToDB } from "./config/db.config";
 
 const PORT = env.PORT;
 const app = express();
@@ -16,6 +17,12 @@ app.get("/health", (_req: Request, res: Response) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on PORT: ${PORT}`);
-});
+const startServer = async () => {
+  await connectToDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on PORT: ${PORT}`);
+  });
+};
+
+startServer();

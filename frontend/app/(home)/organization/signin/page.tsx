@@ -1,5 +1,6 @@
 "use client";
 
+import { loginOrganizationUserAPI } from "@/_api/organization-api";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,14 +12,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/toast";
-import { Building2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Building2, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const OrganizationSignIn = () => {
   const [emailAddress, setEmailAddress] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { setAuth } = useAuth();
 
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -43,6 +47,31 @@ const OrganizationSignIn = () => {
         description: "Password was not provided",
       });
       return;
+    }
+
+    setLoading(true);
+    try {
+      await loginOrganizationUserAPI(emailAddress, password)
+        .then((res) => {
+          const token = res.data.token!;
+          const user = res.data.user;
+
+          setAuth(token, user);
+
+          toast.add({
+            type: "success",
+            description: res.data.message!,
+          });
+
+          router.push("/organization/dashboard");
+        })
+        .catch((err) => {
+          toast.add({ type: "error", description: err.response.data.error });
+        });
+    } catch (error: any) {
+      toast.add({ type: "error", description: error });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,8 +120,9 @@ const OrganizationSignIn = () => {
             size={"lg"}
             className="bg-blue-700 hover:bg-blue-800 w-full lg:py-6 lg:mt-4"
             onClick={handleLogin}
+            disabled={loading}
           >
-            Log In
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Log In"}
           </Button>
         </CardContent>
         <div className="flex justify-center items-center w-full lg:px-8">

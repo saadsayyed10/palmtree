@@ -20,3 +20,13 @@ export const registerOrganizationFounderAPI = async (
     panNumber,
   });
 };
+
+export const loginOrganizationUserAPI = async (
+  email: string,
+  password: string,
+) => {
+  return await axios.post(`${apiUrl}/organization/user/login`, {
+    email,
+    password,
+  });
+};

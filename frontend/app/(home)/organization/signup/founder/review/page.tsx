@@ -44,7 +44,7 @@ const OrganizationSignUpFounderReview = () => {
       await registerOrganizationFounderAPI(
         name,
         email,
-        role,
+        password,
         contact,
         address,
         aadharNumber,

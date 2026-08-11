@@ -49,6 +49,7 @@ export const loginUserService = async (email: string, password: string) => {
       email,
     },
   });
+  if (!user) throw new Error("Your account does not exist");
 
   const isValidPassword = await bcryptjs.compare(password, user?.password!);
   if (!isValidPassword) throw new Error("Password is incorrect");

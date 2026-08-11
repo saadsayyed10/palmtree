@@ -1,5 +1,9 @@
 const OrganizationDashboard = () => {
-  return <div>OrganizationDashboard</div>;
+  return (
+    <div>
+      <h1>OrganizationDashboard</h1>
+    </div>
+  );
 };
 
 export default OrganizationDashboard;

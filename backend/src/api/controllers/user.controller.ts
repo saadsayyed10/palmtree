@@ -32,9 +32,38 @@ export const registerFounderController = async (
       panNumber,
     );
 
-    res
-      .status(201)
-      .json({ message: `Founder account created for: ${founder.name}`, token });
+    res.status(201).json({
+      message: `Founder account created for: ${founder.name}`,
+      token,
+      user: founder,
+    });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export const loginUserController = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const data = {
+    email,
+    password,
+  };
+  if (!data) {
+    return res.status(400).json({ error: "Required fields are missing" });
+  }
+
+  try {
+    const { token, user } = await userServices.loginUserService(
+      email,
+      password,
+    );
+
+    res.status(200).json({
+      message: `Log in successful: ${user?.name}`,
+      token,
+      user,
+    });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }

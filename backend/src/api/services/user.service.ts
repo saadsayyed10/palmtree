@@ -42,3 +42,19 @@ export const registerFounderService = async (
 
   return { token, founder };
 };
+
+export const loginUserService = async (email: string, password: string) => {
+  const user = await prisma.users.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (!user) throw new Error("Your account does not exist");
+
+  const isValidPassword = await bcryptjs.compare(password, user?.password!);
+  if (!isValidPassword) throw new Error("Password is incorrect");
+
+  const token = generateToken(user?.id!);
+
+  return { token, user };
+};

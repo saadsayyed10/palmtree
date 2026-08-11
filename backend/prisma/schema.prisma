@@ -8,16 +8,17 @@ datasource db {
 }
 
 model users {
-  id           String   @id
-  name         String
-  email        String   @unique
-  role         UserType
-  password     String
-  contact      String   @unique
-  address      String
-  aadharNumber String
-  panNumber    String
-  createdAt    DateTime @default(now())
+  id              String   @id
+  name            String
+  email           String   @unique
+  role            UserType
+  password        String
+  contact         String   @unique
+  address         String
+  aadharNumber    String
+  panNumber       String
+  hasOrganization Boolean  @default(false)
+  createdAt       DateTime @default(now())
 }
 
 enum UserType {

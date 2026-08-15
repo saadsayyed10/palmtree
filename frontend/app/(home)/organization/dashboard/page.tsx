@@ -5,16 +5,10 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const OrganizationDashboard = () => {
-  const { hydrate, token } = useAuth();
-
-  const router = useRouter();
+  const { hydrate } = useAuth();
 
   useEffect(() => {
     hydrate();
-
-    if (!token) {
-      router.replace("/organization/signin");
-    }
   }, []);
 
   return (

@@ -58,3 +58,11 @@ export const loginUserService = async (email: string, password: string) => {
 
   return { token, user };
 };
+
+export const fetchOrganizationUserProfileService = async (userId: string) => {
+  return await prisma.users.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+};

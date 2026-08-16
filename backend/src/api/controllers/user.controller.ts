@@ -68,3 +68,20 @@ export const loginUserController = async (req: Request, res: Response) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+export const fetchOrganizationUserProfileController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const userId = (req as any).user.id;
+    if (!userId) {
+      return res.status(401).json({ error: "User ID not found in token" });
+    }
+
+    const user = await userServices.fetchOrganizationUserProfileService(userId);
+    res.status(200).json({ user });
+  } catch (error: any) {
+    return res.status(400).json({ error: error.message });
+  }
+};

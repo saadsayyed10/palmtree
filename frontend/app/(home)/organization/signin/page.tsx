@@ -76,8 +76,8 @@ const OrganizationSignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen lg:px-136">
-      <Card className="w-full shadow-md">
+    <div className="flex justify-center items-center w-full min-h-screen p-4">
+      <Card className="w-full max-w-100 shadow-md">
         <CardHeader className="flex justify-center items-center w-full flex-col lg:gap-y-2">
           <div className="w-16 h-16 bg-blue-700 rounded-[100%] flex justify-center items-center lg:mb-2">
             <Building2 color="white" size={40} />
@@ -128,7 +128,7 @@ const OrganizationSignIn = () => {
         <div className="flex justify-center items-center w-full lg:px-8">
           <Separator className="w-full" />
         </div>
-        <CardFooter className="flex justify-center items-center w-full text-center">
+        <CardFooter className="flex justify-center items-center w-full text-center py-6">
           <p className="text-sm text-neutral-600">
             Don&apos;t have an organization account?
             <br />

@@ -8,27 +8,27 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const OrganizationNavbar = () => {
-  const { logout, user } = useAuth();
-  const [loading, setLoading] = useState<boolean>(false);
+  // const { logout, user } = useAuth();
+  // const [loading, setLoading] = useState<boolean>(false);
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleLogout = () => {
-    setLoading(true);
+  // const handleLogout = () => {
+  //   setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000);
 
-    logout();
+  //   logout();
 
-    toast.add({
-      type: "success",
-      description: "You have been logged out from you account",
-    });
+  //   toast.add({
+  //     type: "success",
+  //     description: "You have been logged out from you account",
+  //   });
 
-    router.replace("/organization/signin");
-  };
+  //   router.replace("/organization/signin");
+  // };
 
   return (
     <div className="flex justify-between items-center w-full lg:py-6 lg:px-12 border-b fixed top-0 bg-white z-50">

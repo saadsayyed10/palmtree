@@ -31,11 +31,11 @@ const OrganizationSidebar = () => {
       </Button>
 
       <Button
-        className={`flex justify-start items-center transition duration-300 gap-x-4 w-full ${pathName === "/organization" ? "bg-blue-700/80 hover:bg-blue-700/80 text-neutral-200" : "bg-transparent hover:bg-blue-700/60 text-neutral-800 hover:text-neutral-200"}`}
+        className={`flex justify-start items-center transition duration-300 gap-x-4 w-full ${pathName === "/organization/dashboard/my-organization" ? "bg-blue-700/80 hover:bg-blue-700/80 text-neutral-200" : "bg-transparent hover:bg-blue-700/60 text-neutral-800 hover:text-neutral-200"}`}
         size={"lg"}
         onClick={() => {
-          if (pathName !== "/organization") {
-            router.push("/organization");
+          if (pathName !== "/organization/dashboard/my-organization") {
+            router.push("/organization/dashboard/my-organization");
           }
         }}
       >

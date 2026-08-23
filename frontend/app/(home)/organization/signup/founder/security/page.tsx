@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { useFounderRegister } from "@/hooks/useFounderRegister";
+import axios from "axios";
 import {
   ArrowBigRight,
   ChartColumnStacked,
@@ -16,7 +17,7 @@ import {
   Users,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const OrganizationSignUpFounderSecurity = () => {
   const {
@@ -31,6 +32,7 @@ const OrganizationSignUpFounderSecurity = () => {
     panNumber,
     setPanNumber,
   } = useFounderRegister();
+  const [pincode, setPincode] = useState<string>("");
 
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -92,6 +94,38 @@ const OrganizationSignUpFounderSecurity = () => {
     router.push("/organization/signup/founder/review");
   };
 
+  const handleFetchAddress = async () => {
+    if (pincode.length !== 6) {
+      setState("");
+      setCity("");
+      return;
+    }
+
+    try {
+      const res = await axios.get(
+        `https://api.postalpincode.in/pincode/${pincode}`,
+      );
+
+      const data = res.data[0];
+
+      if (data.Status === "Success" && data.PostOffice?.length > 0) {
+        setState(data.PostOffice[0].State);
+        setCity(data.PostOffice[0].District);
+      } else {
+        setState("");
+        setCity("");
+      }
+    } catch (error: any) {
+      console.log(error.message);
+      setState("");
+      setCity("");
+    }
+  };
+
+  useEffect(() => {
+    handleFetchAddress();
+  }, [pincode]);
+
   return (
     <div className="flex justify-between items-center w-full lg:p-20">
       <div className="flex justify-start items-start w-[60%] flex-col lg:gap-y-10">
@@ -105,14 +139,28 @@ const OrganizationSignUpFounderSecurity = () => {
         </div>
 
         <div className="flex justify-start items-start w-full flex-col lg:gap-y-4">
+          <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+            <Label>Pincode</Label>
+            <Input
+              className="w-full lg:py-5 bg-muted-foreground/10"
+              placeholder="411048"
+              value={pincode}
+              maxLength={6}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "");
+                setPincode(value);
+              }}
+            />
+          </div>
+
           <div className="flex justify-start items-start w-full lg:gap-x-20">
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>State</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="Maharashtra"
+                disabled
                 value={state}
-                onChange={(e) => setState(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
@@ -120,8 +168,8 @@ const OrganizationSignUpFounderSecurity = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="Pune"
+                disabled
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
               />
             </div>
           </div>
@@ -129,7 +177,7 @@ const OrganizationSignUpFounderSecurity = () => {
           <div className="flex justify-start items-start w-160 flex-col lg:gap-y-2 mt-4">
             <Label>Local Address</Label>
             <Input
-              placeholder="Clover Hills, B-104, NIBM - 411048"
+              placeholder="Clover Hills, B-104, NIBM"
               className="w-full lg:py-5 bg-muted-foreground/10"
               value={localAddress}
               onChange={(e) => setLocalAddress(e.target.value)}

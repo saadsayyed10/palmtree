@@ -2,10 +2,12 @@
 
 import { fetchOrganizationUserProfileAPI } from "@/_api/organization-api";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { useAuth } from "@/hooks/useAuth";
-import { Loader2, Pencil } from "lucide-react";
+import { Loader2, MapPin, Pencil, ShieldCheck, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface OrganizationUserProfileType {
@@ -89,16 +91,85 @@ const OrganizationSettings = () => {
           disabled
           className="bg-blue-700 hover:bg-blue-800 text-neutral-200"
         >
-          <Pencil /> Edit Profile
+          <Pencil /> Request Edit
         </Button>
       </div>
 
-      <div className="flex justify-between items-center w-full">
-        <Card></Card>
-        <div className="flex justify-end items-end w-full flex-col gap-y-6">
-          <Card></Card>
-          <Card></Card>
+      <div className="flex justify-between items-start w-full">
+        <Card className="shadow-md w-150">
+          <CardHeader className="text-lg font-medium text-neutral-800 flex items-center gap-x-2">
+            <User className="w-4 h-4 text-blue-700" />{" "}
+            <span>Personal Information</span>
+          </CardHeader>
+          <CardContent className="flex justify-start items-start w-full flex-col gap-y-4">
+            <div className="flex justify-start items-start w-full flex-col gap-y-2">
+              <Label className="text-sm font-light text-neutral-400">
+                Full Name
+              </Label>
+              <Label>{profile?.name}</Label>
+            </div>
+            <div className="flex justify-start items-start w-full flex-col gap-y-2">
+              <Label className="text-sm font-light text-neutral-400">
+                Email Address
+              </Label>
+              <Label>{profile?.email}</Label>
+            </div>
+            <div className="flex justify-start items-start w-full flex-col gap-y-2">
+              <Label className="text-sm font-light text-neutral-400">
+                Contact Number
+              </Label>
+              <Label>{profile?.contact}</Label>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="flex justify-end items-end w-full flex-col gap-y-6 px-4">
+          {profile?.role === "FOUNDER" && (
+            <Card className="shadow-md w-150">
+              <CardHeader className="text-lg font-medium text-neutral-800 flex items-center gap-x-2">
+                <ShieldCheck className="w-4 h-4 text-blue-700" />{" "}
+                <span>Identity Verification</span>
+              </CardHeader>
+              <CardContent className="flex justify-start items-start w-full flex-col gap-y-4">
+                <div className="flex justify-start items-start w-full flex-col gap-y-2">
+                  <Label className="text-sm font-light text-neutral-400">
+                    Unique ID
+                  </Label>
+                  <Label>{profile?.id}</Label>
+                </div>
+                <div className="flex justify-start items-start w-full flex-col gap-y-2">
+                  <Label className="text-sm font-light text-neutral-400">
+                    PAN Number
+                  </Label>
+                  <Label>{profile?.panNumber}</Label>
+                </div>
+                <div className="flex justify-start items-start w-full flex-col gap-y-2">
+                  <Label className="text-sm font-light text-neutral-400">
+                    Aadhar Number
+                  </Label>
+                  <Label>{profile?.aadharNumber}</Label>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
+      </div>
+
+      <div className="flex justify-start items-start w-full">
+        <Card className="shadow-md w-full">
+          <CardHeader className="text-lg font-medium text-neutral-800 flex items-center gap-x-2">
+            <MapPin className="w-4 h-4 text-blue-700" />{" "}
+            <span>Address Details</span>
+          </CardHeader>
+          <CardContent className="flex justify-start items-start w-full flex-col gap-y-4">
+            <div className="flex justify-start items-start w-full flex-col gap-y-2">
+              <Label className="text-sm font-light text-neutral-400">
+                Address
+              </Label>
+              <Label>{profile?.address}</Label>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

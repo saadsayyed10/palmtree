@@ -11,7 +11,7 @@ const OrganizationDashboardLayout = ({ children }: { children: ReactNode }) => {
       <aside>
         <OrganizationSidebar />
       </aside>
-      <div className="flex justify-start items-start lg:px-72 lg:py-28 w-full">
+      <div className="flex justify-start items-start lg:pl-72 lg:pr-12 lg:py-28 w-full">
         {children}
       </div>
     </main>

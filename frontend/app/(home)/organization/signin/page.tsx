@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/toast";
 import { useAuth } from "@/hooks/useAuth";
-import { Building2, Loader2 } from "lucide-react";
+import { Building2, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -22,6 +22,7 @@ const OrganizationSignIn = () => {
   const [password, setPassword] = useState<string>("");
   const { setAuth } = useAuth();
 
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -76,8 +77,8 @@ const OrganizationSignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen lg:px-136">
-      <Card className="w-full shadow-md">
+    <div className="flex justify-center items-center w-full min-h-screen p-4">
+      <Card className="w-full max-w-100 shadow-md">
         <CardHeader className="flex justify-center items-center w-full flex-col lg:gap-y-2">
           <div className="w-16 h-16 bg-blue-700 rounded-[100%] flex justify-center items-center lg:mb-2">
             <Building2 color="white" size={40} />
@@ -103,18 +104,34 @@ const OrganizationSignIn = () => {
           <div className="flex justify-start items-start w-full flex-col lg:gap-y-2">
             <div className="flex justify-between items-center w-full">
               <Label>Password</Label>
+
               <Label className="text-blue-800 cursor-pointer">
                 {/* TODO: Implement dialog for reset password */}
                 Forgot Password?
               </Label>
             </div>
-            <Input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              className="w-full lg:py-5 bg-muted-foreground/10"
-              placeholder="****************"
-            />
+
+            <div className="relative w-full">
+              <Input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type={showPassword ? "text" : "password"}
+                className="w-full lg:py-5 bg-muted-foreground/10 pr-10"
+                placeholder="****************"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           </div>
           <Button
             size={"lg"}
@@ -128,7 +145,7 @@ const OrganizationSignIn = () => {
         <div className="flex justify-center items-center w-full lg:px-8">
           <Separator className="w-full" />
         </div>
-        <CardFooter className="flex justify-center items-center w-full text-center">
+        <CardFooter className="flex justify-center items-center w-full text-center py-6">
           <p className="text-sm text-neutral-600">
             Don&apos;t have an organization account?
             <br />

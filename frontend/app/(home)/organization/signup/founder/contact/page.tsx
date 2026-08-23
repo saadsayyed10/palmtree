@@ -9,6 +9,8 @@ import { useFounderRegister } from "@/hooks/useFounderRegister";
 import {
   ArrowBigRight,
   ChartColumnStacked,
+  Eye,
+  EyeOff,
   Info,
   Loader2,
   PhoneCall,
@@ -22,6 +24,8 @@ const OrganizationSignUpFounderContact = () => {
   const { password, setPassword, contact, setContact } = useFounderRegister();
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -83,21 +87,54 @@ const OrganizationSignUpFounderContact = () => {
           <div className="flex justify-start items-start w-full lg:gap-x-20">
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>Password</Label>
-              <Input
-                className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="****************"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+
+              <div className="relative w-full">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  className="w-full lg:py-5 bg-muted-foreground/10 pr-10"
+                  placeholder="****************"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
             </div>
+
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>Confirm Password</Label>
-              <Input
-                className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="****************"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
+
+              <div className="relative w-full">
+                <Input
+                  type={showConfirmPassword ? "text" : "password"}
+                  className="w-full lg:py-5 bg-muted-foreground/10 pr-10"
+                  placeholder="****************"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
 

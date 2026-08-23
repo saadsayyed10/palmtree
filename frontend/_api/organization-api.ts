@@ -30,3 +30,11 @@ export const loginOrganizationUserAPI = async (
     password,
   });
 };
+
+export const fetchOrganizationUserProfileAPI = async (token: string) => {
+  return await axios.get(`${apiUrl}/organization/user/profile`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+}

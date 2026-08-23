@@ -85,10 +85,10 @@ const OrganizationSidebar = () => {
       <Button
         size={"lg"}
         variant={"ghost"}
-        className="flex justify-start items-center gap-x-4 w-[85%] absolute bottom-4"
+        className={`flex justify-start items-center gap-x-4 w-[85%] absolute bottom-4 ${pathName === "/organization/dashboard/settings" && "bg-neutral-200/50"}`}
         onClick={() => {
-          if (pathName !== "/organization/settings") {
-            router.push("/organization/settings");
+          if (pathName !== "/organization/dashboard/settings") {
+            router.push("/organization/dashboard/settings");
           }
         }}
       >

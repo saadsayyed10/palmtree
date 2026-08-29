@@ -64,3 +64,27 @@ export const fetchOrganizationService = async (userId: string) => {
 
   return organization;
 };
+
+export const deleteOrganizationService = async (userId: string) => {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  await prisma.organization.delete({
+    where: {
+      id: user?.organizationId!,
+    },
+  });
+
+  await prisma.users.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      hasOrganization: false,
+      organizationId: null,
+    },
+  });
+};

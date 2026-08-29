@@ -17,7 +17,7 @@ export const setupOrganizationService = async (
 
   const organization = await prisma.organization.create({
     data: {
-      id: `${orgName}-${userId}`,
+      id: `${orgName.replace(/\s/g, "")}-${userId}`,
       gstin,
       orgName,
       orgAddress,
@@ -84,7 +84,6 @@ export const deleteOrganizationService = async (userId: string) => {
     },
     data: {
       hasOrganization: false,
-      organizationId: null,
     },
   });
 

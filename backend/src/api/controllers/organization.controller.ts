@@ -53,7 +53,7 @@ export const fetchOrganizationController = async (
     const userId = (req as any).user.id;
     if (!userId) {
       errorMessage =
-        "Unauthorized: Founder must be logged in to setup organization";
+        "Unauthorized: Founder must be logged in to fetch organization profile";
       console.log(errorMessage);
       return res.status(401).json({ error: errorMessage });
     }
@@ -64,5 +64,31 @@ export const fetchOrganizationController = async (
   } catch (error: any) {
     console.log(error.message);
     return res.status(400).json({ error: error.message });
+  }
+};
+
+export const deleteOrganizationController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const userId = (req as any).user.id;
+    if (!userId) {
+      errorMessage =
+        "Unauthorized: Founder must be logged in to delete organization";
+      console.log(errorMessage);
+      return res.status(401).json({ error: errorMessage });
+    }
+
+    const organization =
+      await organizationService.deleteOrganizationService(userId);
+    res
+      .status(204)
+      .json({
+        message: `Organization deleted by the founder - ${organization?.name}`,
+      });
+  } catch (error: any) {
+    console.log(error.message);
+    return res.status(500).json({ error: error.message });
   }
 };

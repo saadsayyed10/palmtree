@@ -87,4 +87,6 @@ export const deleteOrganizationService = async (userId: string) => {
       organizationId: null,
     },
   });
+
+  return user;
 };

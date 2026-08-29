@@ -56,7 +56,6 @@ const OrganizationDashboard = () => {
               size={"lg"}
               variant={"secondary"}
               className={"lg:p-6 text-blue-700"}
-              onClick={() => router.push("/organization/setup")}
             >
               Set Up Organization <ArrowRight />
             </Button>

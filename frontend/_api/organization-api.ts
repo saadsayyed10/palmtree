@@ -34,7 +34,42 @@ export const loginOrganizationUserAPI = async (
 export const fetchOrganizationUserProfileAPI = async (token: string) => {
   return await axios.get(`${apiUrl}/organization/user/profile`, {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-}
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const setupOrganizationAPI = async (
+  gstin: string,
+  orgName: string,
+  orgAddress: string,
+  fiscalYearStart: string,
+  fiscalYearEnd: string,
+  token: string,
+) => {
+  return await axios.post(
+    `${apiUrl}/organization/setup`,
+    { gstin, orgName, orgAddress, fiscalYearStart, fiscalYearEnd },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};
+
+export const fetchOrganizationAPI = async (token: string) => {
+  return await axios.get(`${apiUrl}/organization/profile`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const deleteOrganizationAPI = async (token: string) => {
+  return await axios.delete(`${apiUrl}/organization/delete`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

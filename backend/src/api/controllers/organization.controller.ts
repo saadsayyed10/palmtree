@@ -44,3 +44,25 @@ export const setupOrganizationController = async (
     return res.status(500).json({ error: error.message });
   }
 };
+
+export const fetchOrganizationController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const userId = (req as any).user.id;
+    if (!userId) {
+      errorMessage =
+        "Unauthorized: Founder must be logged in to setup organization";
+      console.log(errorMessage);
+      return res.status(401).json({ error: errorMessage });
+    }
+
+    const organization =
+      await organizationService.fetchOrganizationService(userId);
+    res.status(200).json({ organization });
+  } catch (error: any) {
+    console.log(error.message);
+    return res.status(400).json({ error: error.message });
+  }
+};

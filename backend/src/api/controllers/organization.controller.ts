@@ -37,7 +37,7 @@ export const setupOrganizationController = async (
       );
 
     res.status(201).json({
-      message: `Dear Founder ${updateFounder}, your organization (${organization.orgName}) setup is complete, please wait until PalmTree approves. Once verified and approved, you may start using all services.`,
+      message: `Dear Founder ${updateFounder.name}, your organization (${organization.orgName}) setup is complete, please wait until PalmTree approves. Once verified and approved, you may start using all services.`,
     });
   } catch (error: any) {
     console.log(error.message);

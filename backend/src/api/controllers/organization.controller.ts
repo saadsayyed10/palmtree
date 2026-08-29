@@ -60,7 +60,7 @@ export const fetchOrganizationController = async (
 
     const organization =
       await organizationService.fetchOrganizationService(userId);
-    res.status(200).json({ organization });
+    res.status(200).json({ profile: organization });
   } catch (error: any) {
     console.log(error.message);
     return res.status(400).json({ error: error.message });

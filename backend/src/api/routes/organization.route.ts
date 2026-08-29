@@ -9,7 +9,7 @@ organizationRouter.post(
   protectOrganizationRoute,
   controllers.setupOrganizationController,
 );
-organizationRouter.post(
+organizationRouter.get(
   "/profile",
   protectOrganizationRoute,
   controllers.fetchOrganizationController,

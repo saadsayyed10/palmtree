@@ -19,6 +19,22 @@ model users {
   panNumber       String
   hasOrganization Boolean  @default(false)
   createdAt       DateTime @default(now())
+
+  organizationId String?
+  organization   organization? @relation(fields: [organizationId], references: [id])
+}
+
+model organization {
+  id              String   @id
+  gstin           String
+  orgName         String
+  orgAddress      String
+  fiscalYearStart String
+  fiscalYearEnd   String
+  isApproved      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  users users[]
 }
 
 enum UserType {

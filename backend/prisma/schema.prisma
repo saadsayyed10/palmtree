@@ -26,7 +26,7 @@ model users {
 
 model organization {
   id              String   @id
-  gstin           String
+  gstin           String   @unique
   orgName         String
   orgAddress      String
   fiscalYearStart String

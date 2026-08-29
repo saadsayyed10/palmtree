@@ -9,10 +9,17 @@ organizationRouter.post(
   protectOrganizationRoute,
   controllers.setupOrganizationController,
 );
+
 organizationRouter.get(
   "/profile",
   protectOrganizationRoute,
   controllers.fetchOrganizationController,
+);
+
+organizationRouter.delete(
+  "/delete",
+  protectOrganizationRoute,
+  controllers.deleteOrganizationController,
 );
 
 export default organizationRouter;

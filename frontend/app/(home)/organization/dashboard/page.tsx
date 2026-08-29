@@ -2,11 +2,23 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import {
   ArrowRight,
   ChartColumnStacked,
   FolderKanban,
+  GitCompareArrows,
   Handshake,
   IdCardLanyard,
   Loader2,
@@ -19,8 +31,18 @@ import { useEffect, useState } from "react";
 const OrganizationDashboard = () => {
   const { hydrate } = useAuth();
 
+  const [orgName, setOrgName] = useState<string>("");
+  const [bnm, setBnm] = useState<string>("");
+  const [loc, setLoc] = useState<string>("");
+  const [st, setSt] = useState<string>("");
+  const [dst, setDst] = useState<string>("");
+  const [pncd, setPncd] = useState<string>("");
+  const [stcd, setStcd] = useState<string>("");
+
   const [turnOffHero, setTurnOffHero] = useState<boolean>(false);
   const [heroLoading, setHeroLoading] = useState<boolean>(false);
+  const [openSetupDialog, setOpenSetupDialog] = useState<boolean>(false);
+  const [fetchGSTINData, setFetchGSTINData] = useState<boolean>(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -56,6 +78,7 @@ const OrganizationDashboard = () => {
               size={"lg"}
               variant={"secondary"}
               className={"lg:p-6 text-blue-700"}
+              onClick={() => setOpenSetupDialog(true)}
             >
               Set Up Organization <ArrowRight />
             </Button>
@@ -167,6 +190,43 @@ const OrganizationDashboard = () => {
           <br /> organization is fully configured and approved.
         </h6>
       </div>
+
+      <Dialog open={openSetupDialog} onOpenChange={setOpenSetupDialog}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-medium">
+              Setup Organization
+            </DialogTitle>
+            <DialogDescription>
+              Setup your organization here. Click save when you&apos;re done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-start items-start w-full flex-col gap-y-2">
+            <Label>GSTIN</Label>
+            <Input placeholder="27AA********1Z7" />
+          </div>
+          {fetchGSTINData && (
+            <div className="flex justify-start items-start flex-col w-full gap-y-6">
+              <div className="flex justify-start items-start w-full flex-col gap-y-2">
+                <Label>Organization Name</Label>
+                <Input />
+              </div>
+              <div className="flex justify-start items-start w-full flex-col gap-y-2">
+                <Label>Organization Address</Label>
+                <Input placeholder="" />
+              </div>
+            </div>
+          )}
+          <DialogFooter className="flex justify-between items-center w-full">
+            <DialogClose render={<Button variant="outline">Cancel</Button>} />
+            {!fetchGSTINData && (
+              <Button className="bg-blue-700 hover:bg-blue-800">
+                <GitCompareArrows size={16} /> Fetch Business Details
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

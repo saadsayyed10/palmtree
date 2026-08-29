@@ -40,3 +40,27 @@ export const setupOrganizationService = async (
 
   return { organization, updateFounder };
 };
+
+export const fetchOrganizationService = async (userId: string) => {
+  const organization = await prisma.users.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      organization: {
+        select: {
+          createdAt: true,
+          fiscalYearEnd: true,
+          fiscalYearStart: true,
+          gstin: true,
+          id: true,
+          isApproved: true,
+          orgAddress: true,
+          orgName: true,
+        },
+      },
+    },
+  });
+
+  return organization;
+};

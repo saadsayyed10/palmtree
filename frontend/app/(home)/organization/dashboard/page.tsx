@@ -1,5 +1,6 @@
 "use client";
 
+import { setupOrganizationAPI } from "@/_api/organization-api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +14,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/toast";
 import { useAuth } from "@/hooks/useAuth";
+import { fetchDataFromGSTIN } from "@/lib/gstin";
 import {
   ArrowRight,
   ChartColumnStacked,
@@ -29,21 +33,84 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const OrganizationDashboard = () => {
-  const { hydrate } = useAuth();
+  const { hydrate, token } = useAuth();
 
+  const [gstin, setGstin] = useState<string>("");
   const [orgName, setOrgName] = useState<string>("");
-  const [bnm, setBnm] = useState<string>("");
-  const [loc, setLoc] = useState<string>("");
-  const [st, setSt] = useState<string>("");
-  const [dst, setDst] = useState<string>("");
-  const [pncd, setPncd] = useState<string>("");
-  const [stcd, setStcd] = useState<string>("");
+  const [orgAddress, setOrgAddress] = useState<string>("");
+  const [fiscalYearStart, setFiscalYearStart] = useState<string>("");
+  const [fiscalYearEnd, setFiscalYearEnd] = useState<string>("");
 
   const [turnOffHero, setTurnOffHero] = useState<boolean>(false);
   const [heroLoading, setHeroLoading] = useState<boolean>(false);
+  const [gstinLoading, setGstinLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [openSetupDialog, setOpenSetupDialog] = useState<boolean>(false);
-  const [fetchGSTINData, setFetchGSTINData] = useState<boolean>(true);
+  const [fetchGSTINData, setFetchGSTINData] = useState<boolean>(false);
   const router = useRouter();
+
+  const handleFetchDataFromGSTIN = async () => {
+    setGstinLoading(true);
+    try {
+      const res = await fetchDataFromGSTIN(gstin);
+      console.log(res.data);
+
+      const addr = res.data.taxpayerInfo.adadr[0].addr;
+
+      setOrgName(res.data.taxpayerInfo.lgnm);
+      setOrgAddress(
+        `${addr.bnm} ${addr.loc}, ${addr.st}, ${addr.dst} - ${addr.pncd}, ${addr.stcd}`,
+      );
+
+      setFetchGSTINData(true);
+      setTurnOffHero(true);
+      setOpenSetupDialog(false);
+    } catch (error: any) {
+      console.log(error.message);
+      toast.add({
+        type: "error",
+        description: error.message,
+      });
+    } finally {
+      setGstinLoading(false);
+    }
+  };
+
+  const handleSetupOrganization = async () => {
+    setLoading(true);
+    try {
+      await setupOrganizationAPI(
+        gstin,
+        orgName,
+        orgAddress,
+        fiscalYearStart,
+        fiscalYearEnd,
+        token!,
+      )
+        .then((res) => {
+          console.log(res.data.message);
+          toast.add({
+            type: "success",
+            description: res.data.message,
+          });
+        })
+        .catch((err) => {
+          console.log(err.response.data.error);
+          toast.add({
+            type: "error",
+            description: err.response.data.error,
+          });
+        });
+    } catch (error: any) {
+      console.log(error.message);
+      toast.add({
+        type: "error",
+        description: error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     hydrate();
@@ -201,27 +268,72 @@ const OrganizationDashboard = () => {
               Setup your organization here. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex justify-start items-start w-full flex-col gap-y-2">
-            <Label>GSTIN</Label>
-            <Input placeholder="27AA********1Z7" />
-          </div>
+          {!fetchGSTINData && (
+            <div className="flex justify-start items-start w-full flex-col gap-y-2">
+              <Label>GSTIN</Label>
+              <Input
+                value={gstin}
+                onChange={(e) => setGstin(e.target.value)}
+                placeholder="27AA********1Z7"
+              />
+            </div>
+          )}
           {fetchGSTINData && (
             <div className="flex justify-start items-start flex-col w-full gap-y-6">
               <div className="flex justify-start items-start w-full flex-col gap-y-2">
                 <Label>Organization Name</Label>
-                <Input />
+                <Input value={orgName} disabled />
               </div>
               <div className="flex justify-start items-start w-full flex-col gap-y-2">
                 <Label>Organization Address</Label>
-                <Input placeholder="" />
+                <Textarea
+                  value={orgAddress}
+                  onChange={(e) => setOrgAddress(e.target.value)}
+                />
+              </div>
+              <div className="flex justify-start items-start w-full flex-col gap-y-2">
+                <Label>Fiscal Year Start</Label>
+                <Input
+                  value={fiscalYearStart}
+                  placeholder="April, 2026"
+                  onChange={(e) => setFiscalYearStart(e.target.value)}
+                />
+              </div>
+              <div className="flex justify-start items-start w-full flex-col gap-y-2">
+                <Label>Fiscal Year End</Label>
+                <Input
+                  value={fiscalYearEnd}
+                  placeholder="October, 2026"
+                  onChange={(e) => setFiscalYearEnd(e.target.value)}
+                />
               </div>
             </div>
           )}
           <DialogFooter className="flex justify-between items-center w-full">
             <DialogClose render={<Button variant="outline">Cancel</Button>} />
             {!fetchGSTINData && (
-              <Button className="bg-blue-700 hover:bg-blue-800">
-                <GitCompareArrows size={16} /> Fetch Business Details
+              <Button
+                onClick={handleFetchDataFromGSTIN}
+                className="bg-blue-700 hover:bg-blue-800"
+              >
+                {gstinLoading ? (
+                  <Loader2 className="animate-spin" size={16} />
+                ) : (
+                  <GitCompareArrows size={16} />
+                )}{" "}
+                Fetch Business Details
+              </Button>
+            )}
+            {fetchGSTINData && (
+              <Button
+                onClick={handleSetupOrganization}
+                className="bg-blue-700 hover:bg-blue-800"
+              >
+                {loading ? (
+                  <Loader2 className="animate-spin" size={16} />
+                ) : (
+                  " Save changes"
+                )}
               </Button>
             )}
           </DialogFooter>

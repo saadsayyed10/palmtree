@@ -20,6 +20,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { fetchDataFromGSTIN } from "@/lib/gstin";
 import {
   ArrowRight,
+  Building2,
   ChartColumnStacked,
   FolderKanban,
   GitCompareArrows,
@@ -30,6 +31,9 @@ import {
   Lock,
   Phone,
   Rocket,
+  RotateCwFadingClock,
+  SendHorizonal,
+  User2,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -182,22 +186,86 @@ const OrganizationDashboard = () => {
           </div>
 
           <div className="flex justify-center items-center w-full gap-x-4">
-            <div className="flex justify-start items-start w-full flex-col gap-y-4 h-120 border rounded-xl shadow-lg">
-              <span>1</span>
-              <span>2</span>
-              <span>3</span>
-              <span>4</span>
-              <span>5</span>
+            <div className="flex justify-start items-start w-full flex-col gap-y-6 h-120 border rounded-xl shadow-lg p-6">
+              <Button
+                size={"lg"}
+                variant={"ghost"}
+                className={
+                  "px-8 py-1 rounded-full text-neutral-500 hover:text-neutral-500"
+                }
+              >
+                Application Journey
+              </Button>
+
+              <div className="relative flex justify-start items-start w-full flex-col gap-y-10">
+                {/* Timeline line */}
+                <div className="absolute left-5 top-5 bottom-5 w-px bg-neutral-200" />
+
+                {/* Step 1 */}
+                <div className="relative z-10 flex justify-start items-center w-full gap-x-4">
+                  <span className="w-10 h-10 bg-blue-700 flex shrink-0 justify-center items-center rounded-full">
+                    <User2 size={20} color="white" />
+                  </span>
+
+                  <h4 className="text-neutral-800 font-medium">
+                    Founder Profile
+                  </h4>
+                </div>
+
+                {/* Step 2 */}
+                <div className="relative z-10 flex justify-start items-center w-full gap-x-4">
+                  <span className="w-10 h-10 bg-blue-700 flex shrink-0 justify-center items-center rounded-full">
+                    <Building2 size={20} color="white" />
+                  </span>
+
+                  <h4 className="text-neutral-800 font-medium">
+                    Organization Created
+                  </h4>
+                </div>
+
+                {/* Step 3 */}
+                <div className="relative z-10 flex justify-start items-center w-full gap-x-4">
+                  <span className="w-10 h-10 bg-blue-700 flex shrink-0 justify-center items-center rounded-full">
+                    <SendHorizonal size={20} color="white" />
+                  </span>
+
+                  <h4 className="text-neutral-800 font-medium">Submitted</h4>
+                </div>
+
+                {/* Step 4 */}
+                <div className="relative z-10 flex justify-start items-center w-full gap-x-4">
+                  <span className="w-10 h-10 bg-neutral-100 flex shrink-0 justify-center items-center rounded-full">
+                    <RotateCwFadingClock
+                      className="animate-spin"
+                      size={20}
+                      color="blue"
+                    />
+                  </span>
+
+                  <h4 className="text-neutral-800 font-medium">
+                    Enterprise Approval
+                  </h4>
+                </div>
+
+                {/* Step 5 */}
+                <div className="relative z-10 flex justify-start items-center w-full gap-x-4">
+                  <span className="w-10 h-10 bg-neutral-100 flex shrink-0 justify-center items-center rounded-full">
+                    <Lock size={20} color="gray" />
+                  </span>
+
+                  <h4 className="text-neutral-800 font-medium">Activated</h4>
+                </div>
+              </div>
             </div>
 
             <div className="flex justify-start items-start flex-col w-full lg:gap-y-8 lg:p-6 rounded-xl bg-blue-700 h-120">
               <Button
                 size={"lg"}
                 className={
-                  "bg-white/10 hover:bg-white/10 cursor-default px-8 py-1 rounded-full text-white uppercase tracking-wide font-semibold"
+                  "bg-white/10 hover:bg-white/10 cursor-default px-8 py-1 rounded-full text-white uppercase tracking-wide font-medium"
                 }
               >
-                <Hourglass /> Approval: Pending
+                <Hourglass /> Status: Pending
               </Button>
 
               <h1 className="text-white font-bold text-5xl">

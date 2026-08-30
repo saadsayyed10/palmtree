@@ -253,7 +253,7 @@ const OrganizationDashboard = () => {
                     <Lock size={20} color="gray" />
                   </span>
 
-                  <h4 className="text-neutral-800 font-medium">Activated</h4>
+                  <h4 className="text-neutral-400 font-medium">Activated</h4>
                 </div>
               </div>
             </div>

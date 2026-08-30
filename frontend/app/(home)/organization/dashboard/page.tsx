@@ -24,16 +24,17 @@ import {
   FolderKanban,
   GitCompareArrows,
   Handshake,
+  Hourglass,
   IdCardLanyard,
   Loader2,
   Lock,
+  Phone,
   Rocket,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const OrganizationDashboard = () => {
-  const { hydrate, token } = useAuth();
+  const { hydrate, token, user } = useAuth();
 
   const [gstin, setGstin] = useState<string>("");
   const [orgName, setOrgName] = useState<string>("");
@@ -41,13 +42,12 @@ const OrganizationDashboard = () => {
   const [fiscalYearStart, setFiscalYearStart] = useState<string>("");
   const [fiscalYearEnd, setFiscalYearEnd] = useState<string>("");
 
-  const [turnOffHero, setTurnOffHero] = useState<boolean>(false);
+  const [_turnOffHero, setTurnOffHero] = useState<boolean>(false);
   const [heroLoading, setHeroLoading] = useState<boolean>(false);
   const [gstinLoading, setGstinLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [openSetupDialog, setOpenSetupDialog] = useState<boolean>(false);
   const [fetchGSTINData, setFetchGSTINData] = useState<boolean>(false);
-  const router = useRouter();
 
   const handleFetchDataFromGSTIN = async () => {
     setGstinLoading(true);
@@ -63,8 +63,6 @@ const OrganizationDashboard = () => {
       );
 
       setFetchGSTINData(true);
-      setTurnOffHero(true);
-      setOpenSetupDialog(false);
     } catch (error: any) {
       console.log(error.message);
       toast.add({
@@ -89,6 +87,10 @@ const OrganizationDashboard = () => {
       )
         .then((res) => {
           console.log(res.data.message);
+
+          hydrate();
+          setOpenSetupDialog(false);
+
           toast.add({
             type: "success",
             description: res.data.message,
@@ -112,13 +114,9 @@ const OrganizationDashboard = () => {
     }
   };
 
-  useEffect(() => {
-    hydrate();
-  }, []);
-
   return (
     <div className="flex justify-center items-center w-full flex-col lg:gap-y-10">
-      {!turnOffHero && (
+      {!user?.hasOrganization ? (
         <div className="flex justify-start items-start flex-col w-full lg:gap-y-8 lg:p-6 rounded-xl bg-blue-700">
           <Button
             size={"lg"}
@@ -132,7 +130,7 @@ const OrganizationDashboard = () => {
           <h1 className="text-white font-bold text-5xl">
             Complete your organization
             <br />
-            setup to unlock PalmTree.
+            setup to unlock PalmTree
           </h1>
 
           <p className="lg:text-base font-medium text-neutral-100/80 w-[60%]">
@@ -169,6 +167,67 @@ const OrganizationDashboard = () => {
                 "Skip For Now"
               )}
             </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center flex-col w-full lg:gap-y-8 lg:p-6">
+          <div className="flex justify-center items-center w-full flex-col gap-y-2">
+            <h1 className="text-4xl text-neutral-800 font-semibold">
+              Organization Setup Complete
+            </h1>
+            <h5 className="text-sm text-neutral-500">
+              Your application has been successfully transmitted to the PalmTree
+              administration queue.
+            </h5>
+          </div>
+
+          <div className="flex justify-center items-center w-full gap-x-4">
+            <div className="flex justify-start items-start w-full flex-col gap-y-4 h-120 border rounded-xl shadow-lg">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
+            </div>
+
+            <div className="flex justify-start items-start flex-col w-full lg:gap-y-8 lg:p-6 rounded-xl bg-blue-700 h-120">
+              <Button
+                size={"lg"}
+                className={
+                  "bg-white/10 hover:bg-white/10 cursor-default px-8 py-1 rounded-full text-white uppercase tracking-wide font-semibold"
+                }
+              >
+                <Hourglass /> Approval: Pending
+              </Button>
+
+              <h1 className="text-white font-bold text-5xl">
+                What happens next?
+              </h1>
+
+              <p className="lg:text-base font-medium text-neutral-100/80 w-full">
+                Our Enterprise Compliance team is currently reviewing your
+                organizational documents and other related information. This
+                typically takes 24-48 business hours. You will receive an email
+                once the activation is final.
+              </p>
+
+              <div className="flex justify-start items-start w-full lg:gap-x-6 mt-6">
+                <Button
+                  size={"lg"}
+                  variant={"secondary"}
+                  className={"lg:p-6 text-blue-700"}
+                >
+                  Check Organization <ArrowRight />
+                </Button>
+
+                <Button
+                  size={"lg"}
+                  className={"lg:p-6 bg-white/10 hover:bg-white/5"}
+                >
+                  <Phone /> Contact Support
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       )}

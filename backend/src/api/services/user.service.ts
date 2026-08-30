@@ -32,7 +32,7 @@ export const registerFounderService = async (
       password: hashPassword,
       contact,
       address,
-      aadharNumber,
+      aadharNumber: aadharNumber.replace(/\s/g, ""),
       panNumber,
       role: UserType.FOUNDER,
     },

@@ -158,7 +158,6 @@ const OrganizationSignUpFounderSecurity = () => {
               <Label>State</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="Maharashtra"
                 disabled
                 value={state}
               />
@@ -167,7 +166,6 @@ const OrganizationSignUpFounderSecurity = () => {
               <Label>City</Label>
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="Pune"
                 disabled
                 value={city}
               />

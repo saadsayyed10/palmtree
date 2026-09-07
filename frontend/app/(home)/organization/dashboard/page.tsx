@@ -35,6 +35,7 @@ import {
   SendHorizonal,
   User2,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const OrganizationDashboard = () => {
@@ -52,6 +53,7 @@ const OrganizationDashboard = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [openSetupDialog, setOpenSetupDialog] = useState<boolean>(false);
   const [fetchGSTINData, setFetchGSTINData] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleFetchDataFromGSTIN = async () => {
     setGstinLoading(true);
@@ -284,6 +286,9 @@ const OrganizationDashboard = () => {
                   size={"lg"}
                   variant={"secondary"}
                   className={"lg:p-6 text-blue-700"}
+                  onClick={() =>
+                    router.push("/organization/dashboard/my-organization")
+                  }
                 >
                   Check Organization <ArrowRight />
                 </Button>

@@ -94,6 +94,7 @@ const OrganizationSignIn = () => {
           <div className="flex justify-start items-start w-full flex-col lg:gap-y-2">
             <Label>Email address</Label>
             <Input
+              autoComplete="off"
               value={emailAddress}
               onChange={(e) => setEmailAddress(e.target.value)}
               type="email"
@@ -113,6 +114,7 @@ const OrganizationSignIn = () => {
 
             <div className="relative w-full">
               <Input
+                autoComplete="off"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? "text" : "password"}

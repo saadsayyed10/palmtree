@@ -5,8 +5,7 @@ export const registerFounderController = async (
   req: Request,
   res: Response,
 ) => {
-  const { name, email, password, contact, address, aadharNumber, panNumber } =
-    req.body;
+  const { name, email, password, contact, address, aadharNumber } = req.body;
 
   const data = {
     name,
@@ -15,7 +14,6 @@ export const registerFounderController = async (
     contact,
     address,
     aadharNumber,
-    panNumber,
   };
   if (!data) {
     return res.status(400).json({ error: "Required fields are missing" });
@@ -29,7 +27,6 @@ export const registerFounderController = async (
       contact,
       address,
       aadharNumber,
-      panNumber,
     );
 
     res.status(201).json({

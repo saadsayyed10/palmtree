@@ -98,17 +98,16 @@ const OrganizationSignUpFounderContact = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <button
-                  type="button"
+                <span
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
                   ) : (
                     <Eye className="h-4 w-4" />
                   )}
-                </button>
+                </span>
               </div>
             </div>
 
@@ -125,17 +124,16 @@ const OrganizationSignUpFounderContact = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
-                <button
-                  type="button"
+                <span
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer"
                 >
                   {showConfirmPassword ? (
                     <EyeOff className="h-4 w-4" />
                   ) : (
                     <Eye className="h-4 w-4" />
                   )}
-                </button>
+                </span>
               </div>
             </div>
           </div>
@@ -146,6 +144,7 @@ const OrganizationSignUpFounderContact = () => {
               autoComplete="off"
               placeholder="+91-888888000"
               className="w-full lg:py-5 bg-muted-foreground/10"
+              maxLength={10}
               value={contact}
               onChange={(e) => setContact(e.target.value)}
             />

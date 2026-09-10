@@ -106,13 +106,23 @@ const OrganizationSignUpFounderReview = () => {
             </div>
           </div>
 
-          <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2 mt-4">
-            <Label>Role</Label>
-            <Input
-              className="w-full lg:py-5 bg-muted-foreground/10"
-              disabled
-              value={role}
-            />
+          <div className="flex justify-start items-start w-full lg:gap-x-20 mt-8">
+            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+              <Label>Role</Label>
+              <Input
+                className="w-full lg:py-5 bg-muted-foreground/10"
+                disabled
+                value={role}
+              />
+            </div>
+            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
+              <Label>Aadhar Number</Label>
+              <Input
+                className="w-full lg:py-5 bg-muted-foreground/10"
+                disabled
+                value={aadharNumber}
+              />
+            </div>
           </div>
 
           <div className="flex justify-start items-start w-full lg:gap-x-20 lg:mt-8">
@@ -162,26 +172,7 @@ const OrganizationSignUpFounderReview = () => {
             />
           </div>
 
-          <div className="flex justify-start items-start w-full lg:gap-x-20 lg:mt-8">
-            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
-              <Label>Aadhar Number</Label>
-              <Input
-                className="w-full lg:py-5 bg-muted-foreground/10"
-                disabled
-                value={aadharNumber}
-              />
-            </div>
-            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
-              <Label>PAN</Label>
-              <Input
-                className="w-full lg:py-5 bg-muted-foreground/10"
-                disabled
-                value={panNumber.toUpperCase()}
-              />
-            </div>
-          </div>
-
-          <div className="flex justify-start items-center w-full lg:gap-x-52">
+          <div className="flex justify-start items-center w-full lg:gap-x-52 mt-4 ">
             <h6 className="text-sm text-neutral-600/80 flex items-center gap-x-2">
               <Info size={14} /> Please login if founder account already exists
             </h6>

@@ -410,6 +410,7 @@ const OrganizationDashboard = () => {
               <Input
                 value={gstin.toUpperCase()}
                 onChange={(e) => setGstin(e.target.value)}
+                maxLength={15}
                 placeholder="27AA********1Z7"
               />
             </div>

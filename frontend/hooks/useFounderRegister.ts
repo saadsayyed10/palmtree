@@ -24,9 +24,6 @@ interface FounderRegisterStore {
 
   aadharNumber: string;
   setAadharNumber: (aadharNumber: string) => void;
-
-  panNumber: string;
-  setPanNumber: (panNumber: string) => void;
 }
 
 export const useFounderRegister = create<FounderRegisterStore>((set) => ({
@@ -38,7 +35,6 @@ export const useFounderRegister = create<FounderRegisterStore>((set) => ({
   city: "",
   localAddress: "",
   aadharNumber: "",
-  panNumber: "",
 
   setName: (name) => {
     set({ name });
@@ -70,9 +66,5 @@ export const useFounderRegister = create<FounderRegisterStore>((set) => ({
 
   setAadharNumber: (aadharNumber) => {
     set({ aadharNumber });
-  },
-
-  setPanNumber: (panNumber) => {
-    set({ panNumber });
   },
 }));

@@ -11,7 +11,6 @@ export const registerFounderService = async (
   contact: string,
   address: string,
   aadharNumber: string,
-  panNumber: string,
 ) => {
   const id = `founder-${uuid()}`;
 
@@ -30,10 +29,9 @@ export const registerFounderService = async (
       name,
       email,
       password: hashPassword,
-      contact,
+      contact: `+91-${contact}`,
       address,
       aadharNumber: aadharNumber.replace(/\s/g, ""),
-      panNumber,
       role: UserType.FOUNDER,
     },
   });

@@ -14,9 +14,9 @@ model users {
   role            UserType
   password        String
   contact         String   @unique
-  address         String
-  aadharNumber    String
-  panNumber       String
+  address         String?
+  aadharNumber    String?
+  panNumber       String?
   hasOrganization Boolean  @default(false)
   createdAt       DateTime @default(now())
 

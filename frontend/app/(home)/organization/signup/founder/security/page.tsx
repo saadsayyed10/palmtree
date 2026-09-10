@@ -206,17 +206,6 @@ const OrganizationSignUpFounderSecurity = () => {
                 onChange={(e) => setAadharNumber(e.target.value)}
               />
             </div>
-            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
-              <Label>PAN</Label>
-              <Input
-                autoComplete="off"
-                className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="AAACC2498P"
-                maxLength={10}
-                value={panNumber.replace(/\s/g, "").toUpperCase()}
-                onChange={(e) => setPanNumber(e.target.value)}
-              />
-            </div>
           </div>
 
           <div className="flex justify-start items-center w-full lg:gap-x-52">

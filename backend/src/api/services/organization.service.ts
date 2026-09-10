@@ -16,6 +16,15 @@ export const setupOrganizationService = async (
   });
   if (existingOrganization) throw new Error("This organization already exist");
 
+  const founderTypeCheck = await prisma.users.findUnique({
+    where: {
+      id: userId,
+      role: "FOUNDER",
+    },
+  });
+  if (founderTypeCheck)
+    throw new Error("Only founder use can setup an organization");
+
   const organization = await prisma.organization.create({
     data: {
       id: `${orgName.replace(/\s/g, "")}-${userId}`,

@@ -7,11 +7,15 @@ import {
   Handshake,
   IdCardLanyard,
   LayoutDashboard,
+  Lock,
   Settings,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 const OrganizationSidebar = () => {
+  const { user } = useAuth();
+
   const pathName = usePathname();
   const router = useRouter();
 
@@ -31,6 +35,7 @@ const OrganizationSidebar = () => {
       </Button>
 
       <Button
+        disabled={!user?.hasOrganization}
         className={`flex justify-start items-center transition duration-300 gap-x-4 w-full ${pathName === "/organization/dashboard/my-organization" ? "bg-blue-700/80 hover:bg-blue-700/80 text-neutral-200" : "bg-transparent hover:bg-blue-700/60 text-neutral-800 hover:text-neutral-200"}`}
         size={"lg"}
         onClick={() => {
@@ -41,9 +46,13 @@ const OrganizationSidebar = () => {
       >
         <Building2 className="w-4 h-4" />
         <span>Organization</span>
+        {!user?.hasOrganization && (
+          <Lock size={20} className="relative left-12" />
+        )}
       </Button>
 
       <Button
+        disabled={!user?.hasOrganization}
         className={`flex justify-start items-center transition duration-300 gap-x-4 w-full ${pathName === "/organization/employees" ? "bg-blue-700/80 hover:bg-blue-700/80 text-neutral-200" : "bg-transparent hover:bg-blue-700/60 text-neutral-800 hover:text-neutral-200"}`}
         size={"lg"}
         onClick={() => {
@@ -54,9 +63,13 @@ const OrganizationSidebar = () => {
       >
         <IdCardLanyard className="w-4 h-4" />
         <span>Employees</span>
+        {!user?.hasOrganization && (
+          <Lock size={20} className="relative left-14" />
+        )}
       </Button>
 
       <Button
+        disabled={!user?.hasOrganization}
         className={`flex justify-start items-center transition duration-300 gap-x-4 w-full ${pathName === "/organization/projects" ? "bg-blue-700/80 hover:bg-blue-700/80 text-neutral-200" : "bg-transparent hover:bg-blue-700/60 text-neutral-800 hover:text-neutral-200"}`}
         size={"lg"}
         onClick={() => {
@@ -67,9 +80,13 @@ const OrganizationSidebar = () => {
       >
         <FolderKanban className="w-4 h-4" />
         <span>Projects</span>
+        {!user?.hasOrganization && (
+          <Lock size={20} className="relative left-18" />
+        )}
       </Button>
 
       <Button
+        disabled={!user?.hasOrganization}
         className={`flex justify-start items-center transition duration-300 gap-x-4 w-full ${pathName === "/organization/service-providers" ? "bg-blue-700/80 hover:bg-blue-700/80 text-neutral-200" : "bg-transparent hover:bg-blue-700/60 text-neutral-800 hover:text-neutral-200"}`}
         size={"lg"}
         onClick={() => {
@@ -80,6 +97,9 @@ const OrganizationSidebar = () => {
       >
         <Handshake className="w-4 h-4" />
         <span>Service Providers</span>
+        {!user?.hasOrganization && (
+          <Lock size={20} className="relative left-2" />
+        )}
       </Button>
 
       <Button

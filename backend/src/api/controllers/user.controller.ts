@@ -30,7 +30,7 @@ export const registerFounderController = async (
     );
 
     res.status(201).json({
-      message: `Founder account created for: ${founder.name}. Please login to your PalmTree workspace.`,
+      message: `Founder account created for: ${founder.name}. Please login to PalmTree to access your workspace.`,
       user: founder,
     });
   } catch (error: any) {

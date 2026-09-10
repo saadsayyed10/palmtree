@@ -8,7 +8,6 @@ export const registerOrganizationFounderAPI = async (
   contact: string,
   address: string,
   aadharNumber: string,
-  panNumber: string,
 ) => {
   return await axios.post(`${apiUrl}/organization/founder`, {
     name,
@@ -17,7 +16,6 @@ export const registerOrganizationFounderAPI = async (
     password,
     address,
     aadharNumber,
-    panNumber,
   });
 };
 
@@ -45,11 +43,12 @@ export const setupOrganizationAPI = async (
   orgAddress: string,
   fiscalYearStart: string,
   fiscalYearEnd: string,
+  panNumber: string,
   token: string,
 ) => {
   return await axios.post(
     `${apiUrl}/organization/setup`,
-    { gstin, orgName, orgAddress, fiscalYearStart, fiscalYearEnd },
+    { gstin, orgName, orgAddress, fiscalYearStart, fiscalYearEnd, panNumber },
     {
       headers: {
         Authorization: `Bearer ${token}`,

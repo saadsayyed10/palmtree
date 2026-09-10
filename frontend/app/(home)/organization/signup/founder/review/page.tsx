@@ -29,7 +29,6 @@ const OrganizationSignUpFounderReview = () => {
     city,
     localAddress,
     aadharNumber,
-    panNumber,
   } = useFounderRegister();
 
   const role = "FOUNDER";
@@ -48,7 +47,6 @@ const OrganizationSignUpFounderReview = () => {
         contact,
         address,
         aadharNumber,
-        panNumber,
       )
         .then((res) => {
           toast.add({

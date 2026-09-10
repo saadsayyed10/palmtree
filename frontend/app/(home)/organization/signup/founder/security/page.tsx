@@ -29,8 +29,6 @@ const OrganizationSignUpFounderSecurity = () => {
     setLocalAddress,
     aadharNumber,
     setAadharNumber,
-    panNumber,
-    setPanNumber,
   } = useFounderRegister();
   const [pincode, setPincode] = useState<string>("");
 
@@ -74,22 +72,6 @@ const OrganizationSignUpFounderSecurity = () => {
       toast.add({
         type: "error",
         description: "Provided Aadhar Number is invalid",
-      });
-      return;
-    }
-
-    if (!panNumber) {
-      toast.add({
-        type: "error",
-        description: "Please provide your PAN number",
-      });
-      return;
-    }
-
-    if (panNumber.length != 10) {
-      toast.add({
-        type: "error",
-        description: "Provided PAN is invalid",
       });
       return;
     }

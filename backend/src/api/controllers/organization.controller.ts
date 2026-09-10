@@ -7,8 +7,14 @@ export const setupOrganizationController = async (
   req: Request,
   res: Response,
 ) => {
-  const { gstin, orgName, orgAddress, fiscalYearStart, fiscalYearEnd } =
-    req.body;
+  const {
+    gstin,
+    orgName,
+    orgAddress,
+    fiscalYearStart,
+    fiscalYearEnd,
+    panNumber,
+  } = req.body;
 
   const data = { gstin, orgName, orgAddress, fiscalYearStart, fiscalYearEnd };
   if (!data) {
@@ -33,6 +39,7 @@ export const setupOrganizationController = async (
         orgAddress,
         fiscalYearStart,
         fiscalYearEnd,
+        panNumber,
         userId,
       );
 
@@ -82,11 +89,9 @@ export const deleteOrganizationController = async (
 
     const organization =
       await organizationService.deleteOrganizationService(userId);
-    res
-      .status(204)
-      .json({
-        message: `Organization deleted by the founder - ${organization?.name}`,
-      });
+    res.status(204).json({
+      message: `Organization deleted by the founder - ${organization?.name}`,
+    });
   } catch (error: any) {
     console.log(error.message);
     return res.status(500).json({ error: error.message });

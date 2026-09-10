@@ -6,6 +6,7 @@ export const setupOrganizationService = async (
   orgAddress: string,
   fiscalYearStart: string,
   fiscalYearEnd: string,
+  panNumber: string,
   userId: string,
 ) => {
   const existingOrganization = await prisma.organization.findUnique({
@@ -35,6 +36,7 @@ export const setupOrganizationService = async (
     data: {
       organizationId: organization.id,
       hasOrganization: true,
+      panNumber,
     },
   });
 

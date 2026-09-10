@@ -3,6 +3,7 @@
 import { setupOrganizationAPI } from "@/_api/organization-api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogClose,
@@ -14,6 +15,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/toast";
 import { useAuth } from "@/hooks/useAuth";
@@ -37,6 +43,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
 
 const OrganizationDashboard = () => {
   const { hydrate, token, user } = useAuth();
@@ -44,8 +51,9 @@ const OrganizationDashboard = () => {
   const [gstin, setGstin] = useState<string>("");
   const [orgName, setOrgName] = useState<string>("");
   const [orgAddress, setOrgAddress] = useState<string>("");
-  const [fiscalYearStart, setFiscalYearStart] = useState<string>("");
-  const [fiscalYearEnd, setFiscalYearEnd] = useState<string>("");
+  const [fiscalYearStart, setFiscalYearStart] = useState<Date>();
+  const [fiscalYearEnd, setFiscalYearEnd] = useState<Date>();
+  const [panNumber, setPanNumber] = useState<string>("");
 
   const [_turnOffHero, setTurnOffHero] = useState<boolean>(false);
   const [heroLoading, setHeroLoading] = useState<boolean>(false);
@@ -62,6 +70,7 @@ const OrganizationDashboard = () => {
       console.log(res.data);
 
       const addr = res.data.taxpayerInfo.adadr[0].addr;
+      setPanNumber(res.data.taxpayerInfo.panNo);
 
       setOrgName(res.data.taxpayerInfo.lgnm);
       setOrgAddress(
@@ -87,8 +96,9 @@ const OrganizationDashboard = () => {
         gstin,
         orgName,
         orgAddress,
-        fiscalYearStart,
-        fiscalYearEnd,
+        fiscalYearStart?.toString() ?? "",
+        fiscalYearEnd?.toString() ?? "",
+        panNumber,
         token!,
       )
         .then((res) => {
@@ -410,6 +420,7 @@ const OrganizationDashboard = () => {
               <Input
                 value={gstin.toUpperCase()}
                 onChange={(e) => setGstin(e.target.value)}
+                autoComplete="off"
                 maxLength={15}
                 placeholder="27AA********1Z7"
               />
@@ -430,19 +441,59 @@ const OrganizationDashboard = () => {
               </div>
               <div className="flex justify-start items-start w-full flex-col gap-y-2">
                 <Label>Fiscal Year Start</Label>
-                <Input
-                  value={fiscalYearStart}
-                  placeholder="April, 2026"
-                  onChange={(e) => setFiscalYearStart(e.target.value)}
-                />
+                <Popover>
+                  <PopoverTrigger
+                    render={
+                      <Button
+                        variant="outline"
+                        id="date-picker-simple"
+                        className="justify-start font-normal w-full"
+                      >
+                        {fiscalYearStart ? (
+                          format(fiscalYearStart, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    }
+                  />
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={fiscalYearStart}
+                      onSelect={setFiscalYearStart}
+                      defaultMonth={fiscalYearStart}
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
               <div className="flex justify-start items-start w-full flex-col gap-y-2">
                 <Label>Fiscal Year End</Label>
-                <Input
-                  value={fiscalYearEnd}
-                  placeholder="October, 2026"
-                  onChange={(e) => setFiscalYearEnd(e.target.value)}
-                />
+                <Popover>
+                  <PopoverTrigger
+                    render={
+                      <Button
+                        variant="outline"
+                        id="date-picker-simple"
+                        className="justify-start font-normal w-full"
+                      >
+                        {fiscalYearEnd ? (
+                          format(fiscalYearEnd, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    }
+                  />
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={fiscalYearEnd}
+                      onSelect={setFiscalYearEnd}
+                      defaultMonth={fiscalYearEnd}
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
           )}

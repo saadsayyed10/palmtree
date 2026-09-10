@@ -30,10 +30,10 @@ const OrganizationSignUpFounderContact = () => {
   const router = useRouter();
 
   const handleContactDetails = () => {
-    if (!contact) {
+    if (!contact || contact.length < 10 || contact.length > 10) {
       toast.add({
         type: "error",
-        description: "Founder contact number was not provided",
+        description: "Please enter a valid contact number",
       });
       return;
     }
@@ -90,6 +90,7 @@ const OrganizationSignUpFounderContact = () => {
 
               <div className="relative w-full">
                 <Input
+                  autoComplete="off"
                   type={showPassword ? "text" : "password"}
                   className="w-full lg:py-5 bg-muted-foreground/10 pr-10"
                   placeholder="****************"
@@ -116,6 +117,7 @@ const OrganizationSignUpFounderContact = () => {
 
               <div className="relative w-full">
                 <Input
+                  autoComplete="off"
                   type={showConfirmPassword ? "text" : "password"}
                   className="w-full lg:py-5 bg-muted-foreground/10 pr-10"
                   placeholder="****************"
@@ -141,6 +143,7 @@ const OrganizationSignUpFounderContact = () => {
           <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2 mt-4">
             <Label>Contact Number</Label>
             <Input
+              autoComplete="off"
               placeholder="+91-888888000"
               className="w-full lg:py-5 bg-muted-foreground/10"
               value={contact}

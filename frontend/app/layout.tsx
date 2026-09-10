@@ -18,8 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Codename: Palmtree",
-  description: "",
+  title: "Palmtree",
+  description:
+    "Architectured -> Designed -> Developed -> Tested => Shipped by Saad Sayyed.",
 };
 
 export default function RootLayout({

@@ -38,9 +38,7 @@ export const registerFounderService = async (
     },
   });
 
-  const token = generateToken(founder.id!);
-
-  return { token, founder };
+  return founder;
 };
 
 export const loginUserService = async (email: string, password: string) => {

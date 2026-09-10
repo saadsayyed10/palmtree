@@ -56,7 +56,7 @@ const OrganizationSignUpFounderReview = () => {
             description: res.data.message,
           });
 
-          router.push("/organization/dashboard");
+          router.push("/organization/signin");
         })
         .catch((err) =>
           toast.add({
@@ -176,7 +176,7 @@ const OrganizationSignUpFounderReview = () => {
               <Input
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 disabled
-                value={panNumber}
+                value={panNumber.toUpperCase()}
               />
             </div>
           </div>

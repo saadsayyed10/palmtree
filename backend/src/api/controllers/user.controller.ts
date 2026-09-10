@@ -22,7 +22,7 @@ export const registerFounderController = async (
   }
 
   try {
-    const { token, founder } = await userServices.registerFounderService(
+    const founder = await userServices.registerFounderService(
       name,
       email,
       password,
@@ -33,8 +33,7 @@ export const registerFounderController = async (
     );
 
     res.status(201).json({
-      message: `Founder account created for: ${founder.name}`,
-      token,
+      message: `Founder account created for: ${founder.name}. Please login to your PalmTree workspace.`,
       user: founder,
     });
   } catch (error: any) {

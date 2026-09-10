@@ -36,7 +36,7 @@ import {
   User2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const OrganizationDashboard = () => {
   const { hydrate, token, user } = useAuth();
@@ -119,6 +119,10 @@ const OrganizationDashboard = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    hydrate();
+  }, [token]);
 
   return (
     <div className="flex justify-center items-center w-full flex-col lg:gap-y-10">
@@ -404,7 +408,7 @@ const OrganizationDashboard = () => {
             <div className="flex justify-start items-start w-full flex-col gap-y-2">
               <Label>GSTIN</Label>
               <Input
-                value={gstin}
+                value={gstin.toUpperCase()}
                 onChange={(e) => setGstin(e.target.value)}
                 placeholder="27AA********1Z7"
               />

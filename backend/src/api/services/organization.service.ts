@@ -22,7 +22,7 @@ export const setupOrganizationService = async (
       role: "FOUNDER",
     },
   });
-  if (founderTypeCheck)
+  if (!founderTypeCheck)
     throw new Error("Only founder use can setup an organization");
 
   const organization = await prisma.organization.create({

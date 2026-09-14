@@ -150,8 +150,8 @@ const OrganizationSignUpFounderSecurity = () => {
               <Input
                 autoComplete="off"
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                disabled
                 value={state}
+                onChange={(e) => setState(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
@@ -159,8 +159,8 @@ const OrganizationSignUpFounderSecurity = () => {
               <Input
                 autoComplete="off"
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                disabled
                 value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             </div>
           </div>

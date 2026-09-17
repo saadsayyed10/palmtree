@@ -3,11 +3,25 @@
 import { fetchOrganizationUserProfileAPI } from "@/_api/organization-api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { useAuth } from "@/hooks/useAuth";
-import { Loader2, MapPin, Pencil, ShieldCheck, User } from "lucide-react";
+import {
+  Info,
+  Loader2,
+  MapPin,
+  Pencil,
+  ShieldCheck,
+  Trash,
+  User,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface OrganizationUserProfileType {
@@ -87,12 +101,37 @@ const OrganizationSettings = () => {
             Manage your personal information, address and verified identities.
           </h5>
         </div>
-        <Button
-          disabled
-          className="bg-blue-700 hover:bg-blue-800 text-neutral-200"
-        >
-          <Pencil /> Request Edit
-        </Button>
+        <div className="flex justify-end items-center w-full gap-x-4">
+          {!profile?.hasOrganization && (
+            <span
+              className="cursor-pointer"
+              title="Please setup your Organization."
+            >
+              <Info size={20} color="red" />
+            </span>
+          )}
+          <Button
+            disabled
+            className="bg-blue-700 hover:bg-blue-800 text-neutral-200"
+          >
+            <Pencil /> Request Edit
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button className="bg-red-700 hover:bg-red-800 text-neutral-200" />
+              }
+            >
+              <Trash /> Delete
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              {profile?.hasOrganization && (
+                <DropdownMenuItem>Organization</DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       <div className="flex justify-between items-start w-full">
@@ -141,7 +180,11 @@ const OrganizationSettings = () => {
                   <Label className="text-sm font-light text-neutral-400">
                     PAN Number
                   </Label>
-                  <Label>{profile?.panNumber}</Label>
+                  <Label>
+                    {profile?.panNumber
+                      ? profile?.panNumber
+                      : "(Setup Organization to reflect your PAN Number)"}
+                  </Label>
                 </div>
                 <div className="flex justify-start items-start w-full flex-col gap-y-2">
                   <Label className="text-sm font-light text-neutral-400">

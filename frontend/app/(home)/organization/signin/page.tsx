@@ -94,6 +94,7 @@ const OrganizationSignIn = () => {
           <div className="flex justify-start items-start w-full flex-col lg:gap-y-2">
             <Label>Email address</Label>
             <Input
+              autoComplete="off"
               value={emailAddress}
               onChange={(e) => setEmailAddress(e.target.value)}
               type="email"
@@ -113,6 +114,7 @@ const OrganizationSignIn = () => {
 
             <div className="relative w-full">
               <Input
+                autoComplete="off"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? "text" : "password"}
@@ -120,8 +122,7 @@ const OrganizationSignIn = () => {
                 placeholder="****************"
               />
 
-              <button
-                type="button"
+              <span
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
@@ -130,7 +131,7 @@ const OrganizationSignIn = () => {
                 ) : (
                   <Eye className="h-4 w-4" />
                 )}
-              </button>
+              </span>
             </div>
           </div>
           <Button

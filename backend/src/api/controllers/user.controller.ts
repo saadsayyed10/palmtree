@@ -5,8 +5,7 @@ export const registerFounderController = async (
   req: Request,
   res: Response,
 ) => {
-  const { name, email, password, contact, address, aadharNumber, panNumber } =
-    req.body;
+  const { name, email, password, contact, address, aadharNumber } = req.body;
 
   const data = {
     name,
@@ -15,26 +14,23 @@ export const registerFounderController = async (
     contact,
     address,
     aadharNumber,
-    panNumber,
   };
   if (!data) {
     return res.status(400).json({ error: "Required fields are missing" });
   }
 
   try {
-    const { token, founder } = await userServices.registerFounderService(
+    const founder = await userServices.registerFounderService(
       name,
       email,
       password,
       contact,
       address,
       aadharNumber,
-      panNumber,
     );
 
     res.status(201).json({
-      message: `Founder account created for: ${founder.name}`,
-      token,
+      message: `Founder account created for: ${founder.name}. Please login to PalmTree to access your workspace.`,
       user: founder,
     });
   } catch (error: any) {

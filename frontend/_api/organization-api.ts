@@ -8,7 +8,6 @@ export const registerOrganizationFounderAPI = async (
   contact: string,
   address: string,
   aadharNumber: string,
-  panNumber: string,
 ) => {
   return await axios.post(`${apiUrl}/organization/founder`, {
     name,
@@ -17,7 +16,6 @@ export const registerOrganizationFounderAPI = async (
     password,
     address,
     aadharNumber,
-    panNumber,
   });
 };
 
@@ -34,7 +32,43 @@ export const loginOrganizationUserAPI = async (
 export const fetchOrganizationUserProfileAPI = async (token: string) => {
   return await axios.get(`${apiUrl}/organization/user/profile`, {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-}
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const setupOrganizationAPI = async (
+  gstin: string,
+  orgName: string,
+  orgAddress: string,
+  fiscalYearStart: string,
+  fiscalYearEnd: string,
+  panNumber: string,
+  token: string,
+) => {
+  return await axios.post(
+    `${apiUrl}/organization/setup`,
+    { gstin, orgName, orgAddress, fiscalYearStart, fiscalYearEnd, panNumber },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};
+
+export const fetchOrganizationAPI = async (token: string) => {
+  return await axios.get(`${apiUrl}/organization/profile`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const deleteOrganizationAPI = async (token: string) => {
+  return await axios.delete(`${apiUrl}/organization/delete`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

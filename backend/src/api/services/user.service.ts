@@ -11,7 +11,6 @@ export const registerFounderService = async (
   contact: string,
   address: string,
   aadharNumber: string,
-  panNumber: string,
 ) => {
   const id = `founder-${uuid()}`;
 
@@ -30,17 +29,14 @@ export const registerFounderService = async (
       name,
       email,
       password: hashPassword,
-      contact,
+      contact: `+91-${contact}`,
       address,
-      aadharNumber,
-      panNumber,
+      aadharNumber: aadharNumber.replace(/\s/g, ""),
       role: UserType.FOUNDER,
     },
   });
 
-  const token = generateToken(founder.id!);
-
-  return { token, founder };
+  return founder;
 };
 
 export const loginUserService = async (email: string, password: string) => {

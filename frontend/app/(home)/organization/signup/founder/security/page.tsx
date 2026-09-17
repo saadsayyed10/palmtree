@@ -29,8 +29,6 @@ const OrganizationSignUpFounderSecurity = () => {
     setLocalAddress,
     aadharNumber,
     setAadharNumber,
-    panNumber,
-    setPanNumber,
   } = useFounderRegister();
   const [pincode, setPincode] = useState<string>("");
 
@@ -74,14 +72,6 @@ const OrganizationSignUpFounderSecurity = () => {
       toast.add({
         type: "error",
         description: "Provided Aadhar Number is invalid",
-      });
-      return;
-    }
-
-    if (!panNumber) {
-      toast.add({
-        type: "error",
-        description: "Please provide your PAN number",
       });
       return;
     }
@@ -142,6 +132,7 @@ const OrganizationSignUpFounderSecurity = () => {
           <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
             <Label>Pincode</Label>
             <Input
+              autoComplete="off"
               className="w-full lg:py-5 bg-muted-foreground/10"
               placeholder="411048"
               value={pincode}
@@ -157,19 +148,19 @@ const OrganizationSignUpFounderSecurity = () => {
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>State</Label>
               <Input
+                autoComplete="off"
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="Maharashtra"
-                disabled
                 value={state}
+                onChange={(e) => setState(e.target.value)}
               />
             </div>
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>City</Label>
               <Input
+                autoComplete="off"
                 className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="Pune"
-                disabled
                 value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             </div>
           </div>
@@ -177,6 +168,7 @@ const OrganizationSignUpFounderSecurity = () => {
           <div className="flex justify-start items-start w-160 flex-col lg:gap-y-2 mt-4">
             <Label>Local Address</Label>
             <Input
+              autoComplete="off"
               placeholder="Clover Hills, B-104, NIBM"
               className="w-full lg:py-5 bg-muted-foreground/10"
               value={localAddress}
@@ -188,19 +180,12 @@ const OrganizationSignUpFounderSecurity = () => {
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>Aadhar Number</Label>
               <Input
+                autoComplete="off"
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="1111 0001 1010"
-                value={aadharNumber}
+                maxLength={12}
+                value={aadharNumber.replace(/\s/g, "")}
                 onChange={(e) => setAadharNumber(e.target.value)}
-              />
-            </div>
-            <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
-              <Label>PAN</Label>
-              <Input
-                className="w-full lg:py-5 bg-muted-foreground/10"
-                placeholder="ABCDE1234P"
-                value={panNumber}
-                onChange={(e) => setPanNumber(e.target.value)}
               />
             </div>
           </div>

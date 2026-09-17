@@ -74,6 +74,7 @@ const OrganizationSignUpFounderPersonal = () => {
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>Name</Label>
               <Input
+                autoComplete="off"
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="Sami Khedira"
                 value={name}
@@ -83,6 +84,7 @@ const OrganizationSignUpFounderPersonal = () => {
             <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2">
               <Label>Email</Label>
               <Input
+                autoComplete="off"
                 className="w-full lg:py-5 bg-muted-foreground/10"
                 placeholder="samikhed@palm.com"
                 value={email}
@@ -93,6 +95,7 @@ const OrganizationSignUpFounderPersonal = () => {
           <div className="flex justify-start items-start w-70 flex-col lg:gap-y-2 mt-4">
             <Label>Role</Label>
             <Input
+              autoComplete="off"
               placeholder="Founder"
               className="w-full lg:py-5 bg-muted-foreground/10 cursor-not-allowed"
               disabled
